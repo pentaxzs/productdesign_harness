@@ -1,19 +1,22 @@
 전체 파이프라인을 실행한다: Plan → Wireframe → Prototype → Critique → Refine → Human Review
 
-## 진행 모드 (시작 전에 결정)
+## 진행 방식
 
-`$ARGUMENTS`에 `--confirm`이 있으면 **confirm 모드**, 없으면 **auto 모드**다.
+**각 Phase가 끝나면 멈추고 사용자에게 묻는다.** 이것이 기본이다.
 
-| 모드 | 동작 |
-|------|------|
-| **auto** (기본) | Phase마다 요약과 선택지를 보여주되 **멈추지 않고** 끝까지 진행한다 |
-| **confirm** | Phase마다 AskUserQuestion으로 **답변을 받고** 진행한다 |
-
-시작할 때 어느 모드인지 한 줄로 알린다.
-예: `auto 모드로 진행합니다. 각 단계 결과를 보여드리고 멈추지 않습니다. (--confirm 을 붙이면 단계마다 확인받습니다)`
-
-`playbooks/report-checkpoint.md`가 체크포인트 출력 형식과 모드별 동작을 정의한다.
+`playbooks/report-checkpoint.md`가 출력 형식과 선택지를 정의한다.
 **각 Phase를 마칠 때마다 이 Playbook을 실행한다.**
+
+체크포인트 선택지:
+1. **다음 단계 진행** — 다음 Phase로 가고 그 단계가 끝나면 다시 묻는다
+2. **끝까지 진행** — 이후 묻지 않고 끝까지 간다 (요약은 계속 출력)
+3. **〈이 Phase에서 바꿀 것〉** — 해당 Phase 재실행
+4. **여기서 멈춤**
+
+사용자가 2번을 고른 뒤에는 남은 체크포인트에서 멈추지 않는다.
+`$ARGUMENTS`에 `--auto`가 있으면 처음부터 멈추지 않는다.
+
+**Phase 5 (Refine)는 어느 경우에도 멈추지 않는다.** 고칠 것이 이미 명확하기 때문이다.
 
 ## 실행 절차
 
@@ -84,7 +87,8 @@
    - `playbooks/write-critique-report.md`
 4. Output: `evaluation/critique-report.md`
 5. **체크포인트**: `playbooks/report-checkpoint.md` — **판정(Pass/Revise)**, 실행 검증 수행 여부,
-   콘솔 에러 수, Critical/Major/Minor 건수. 판정이 Revise면 confirm 모드에서도 멈추지 않고 Phase 5로 간다.
+   콘솔 에러 수, Critical/Major/Minor 건수.
+   판정이 Revise면 선택지를 "수정 진행 / 확인만 하고 멈춤 / 특정 이슈 무시하고 Pass"로 바꾼다.
 
 > 코드를 읽기 전에 **먼저 띄워본다.** 백지 화면, 레이아웃 깨짐, 반응 없는 버튼은
 > 소스만 읽어서는 보이지 않는다.
@@ -97,7 +101,7 @@ Critique 판정이 **Revise**이면:
 4. Phase 4 (Critique)를 다시 실행한다. 실행 검증부터 다시 한다.
 5. 최대 3회 반복한다.
 
-Refine 각 회차에서는 체크포인트를 보고하지 않는다. **최종 판정이 날 때 한 번만** 보고한다.
+Refine 각 회차에서는 멈추지도, 보고하지도 않는다. **최종 판정이 날 때 한 번만** 보고한다.
 같은 ID의 이슈가 2회 연속 남으면 그 사실을 보고에 명시한다 — 수정 방향이 틀렸다는 신호다.
 
 ### Phase 6: Human Review

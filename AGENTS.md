@@ -62,8 +62,10 @@ Production 개발이 아니라, "이 경험으로 개발 논의를 시작할 수
 > 브라우저 실행 검증(`check-prototype-runs`)을 수행할 수 없으면
 > 리포트에 "실행 검증 미수행"을 명시하고, `Pass` 판정에 단서를 붙인다.
 >
-> 각 Phase를 마칠 때 `playbooks/report-checkpoint.md`로 산출물 요약과 선택지를 보여준다.
-> 요청에 `--confirm`이 있으면 각 체크포인트에서 멈추고, 없으면 보여주기만 하고 진행한다.
+> 각 Phase를 마칠 때 `playbooks/report-checkpoint.md`로 산출물을 요약하고 **멈춰서 묻는다.**
+> 선택지는 다음 단계 진행 / 끝까지 진행 / 이 단계 수정 / 멈춤이며,
+> "끝까지 진행"을 고른 뒤에는 멈추지 않되 요약은 계속 출력한다.
+> 요청에 `--auto`가 있으면 처음부터 멈추지 않는다. Refine은 어느 경우에도 멈추지 않는다.
 >
 > 프로토타입은 상태 제어 쿼리(`?reset=1` `?seed=0` `?state=loading` `?state=error`)를
 > 반드시 구현한다. 없으면 Empty/Loading/Error를 검증할 수 없다.

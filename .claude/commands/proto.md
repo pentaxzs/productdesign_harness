@@ -28,7 +28,7 @@ Prototype Agent를 실행한다.
 4. 로컬 서버로 띄우면 전체 Flow를 체험할 수 있는 상태로 만든다.
 5. Agent의 완료 조건을 확인한다.
 6. `playbooks/report-checkpoint.md`를 실행해 체크포인트를 보고한다.
-   `$ARGUMENTS`에 `--confirm`이 있으면 진행 여부를 묻고, 없으면 요약과 선택지만 보여준다.
+   산출물 요약을 보여주고 **멈춰서** 다음 동작을 묻는다 (`--auto`가 있으면 묻지 않는다).
 
 ## Input
 $ARGUMENTS
