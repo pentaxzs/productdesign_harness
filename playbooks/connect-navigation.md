@@ -10,16 +10,18 @@ User Flow에 따라 화면 간 이동을 연결한다.
 Hash Routing 기반 SPA로 구현한다.
 
 ### 라우팅 구조
+`specs/screens.md`의 화면 목록으로 라우트를 정의한다. 화면 1개 = 라우트 1개.
+
 ```javascript
-// 화면별 hash
 const routes = {
-  '#/': 'index',           // 홈
-  '#/search': 'search',    // 검색 결과
-  '#/ai': 'ai-recommend',  // AI 추천
-  '#/compare': 'compare',  // 카드 비교
-  '#/detail': 'detail',    // 카드 상세
+  '#/': 'index',           // 홈 — 모든 제품의 진입점
+  '#/<screen-id>': '<screen-id>',
+  // ... specs/screens.md의 화면 수만큼
 };
 ```
+
+> 예시 (카드 추천 서비스):
+> `'#/search'`, `'#/ai'`, `'#/compare'`, `'#/detail'`
 
 ### 페이지 전환
 ```javascript
@@ -33,8 +35,8 @@ window.addEventListener('hashchange', () => {
 ### 링크/버튼 연결
 ```html
 <!-- 페이지 이동 -->
-<a href="#/search">카드 검색하기</a>
-<button onclick="navigateTo('#/ai')">AI 추천 받기</button>
+<a href="#/search">검색하기</a>
+<button onclick="navigateTo('#/ai')">추천 받기</button>
 
 <!-- 뒤로가기 -->
 <button onclick="history.back()">← 뒤로</button>
@@ -43,9 +45,10 @@ window.addEventListener('hashchange', () => {
 ### 헤더 네비게이션
 모든 화면에 공통 헤더를 두고, 주요 페이지로 이동할 수 있게 한다:
 - 로고 → 홈
-- 카드 검색 → 검색
-- AI 추천 → AI 추천
-- 카드 비교 → 비교 (선택된 카드가 있을 때)
+- Key Scenario마다 진입점 1개
+- 조건부 진입점은 조건이 충족됐을 때만 노출한다 (예: 비교 → 선택된 항목이 있을 때)
+
+**막다른 화면(Dead End)을 만들지 않는다.** 모든 화면에서 홈 또는 이전 화면으로 돌아갈 수 있어야 한다.
 
 ## 검증
 - 모든 CTA 버튼이 올바른 화면으로 이동하는가?

@@ -7,13 +7,12 @@
 - Wireframe Agent (주 사용)
 
 ## 파일 구조
+`specs/screens.md`의 화면 목록으로 HTML 파일을 만든다. 화면 1개 = 파일 1개.
+
 ```
 prototype/
-├── index.html              ← 메인/홈 화면
-├── search-results.html     ← 검색 결과
-├── ai-recommend.html       ← AI 추천
-├── compare.html            ← 카드 비교
-├── detail.html             ← 카드 상세
+├── index.html              ← 메인/홈 화면 (고정)
+├── <screen-id>.html        ← specs/screens.md 의 화면 수만큼
 ├── styles/
 │   ├── tokens.css          ← DS 토큰 (색상, 간격, radius, 타이포)
 │   ├── components.css      ← DS 컴포넌트 스타일

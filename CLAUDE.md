@@ -139,6 +139,12 @@ productdesign_harness/
 │   └── design-system.md
 ├── specs/                    ← Planner 산출물
 ├── prototype/                ← Wireframe + Prototype 산출물
-└── evaluation/               ← Critic 산출물
-    └── checklist.md
+├── evaluation/               ← Critic 산출물
+│   └── checklist.md          ← Part A(제품별, 자동 생성) + Part B(공통, 고정)
+└── examples/cardfit/         ← 완성된 산출물 예시 (참고용, 파이프라인은 참조하지 않음)
 ```
+
+## 제품 중립성
+이 하네스는 **제품 1개 = 클론 1개**를 전제로 한 템플릿입니다.
+`agents/`, `playbooks/`, `context/ux-principles.md`, `context/design-system.md`, `evaluation/checklist.md`에는
+특정 제품의 전제를 넣지 않는다. 예시가 필요하면 `## 예시` 헤딩이나 `>` 인용으로 명확히 구분해서 작성한다.
