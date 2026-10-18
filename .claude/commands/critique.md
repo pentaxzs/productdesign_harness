@@ -21,6 +21,8 @@ Critic Agent를 실행한다.
    - `playbooks/write-critique-report.md` — 리포트 작성
 4. 산출물을 `evaluation/critique-report.md`에 저장한다.
 5. 판정 결과(Pass/Revise)를 사용자에게 보여준다.
+6. `playbooks/report-checkpoint.md`를 실행해 체크포인트를 보고한다.
+   산출물 요약을 보여주고 **멈춰서** 다음 동작을 묻는다 (`--auto`가 있으면 묻지 않는다).
 
 ## Input
 $ARGUMENTS

@@ -10,6 +10,38 @@ AI 프로토타이핑을 위한 Harness Engineering 템플릿.
 - [Codex](https://github.com/openai/codex) — `AGENTS.md` 기반으로 파이프라인 실행
 - Figma MCP 연동 시 Figma에 직접 와이어프레임 생성 가능 (Claude Code만 해당)
 
+## 이 하네스를 쓰는 방식
+
+**`/wire`는 따로 설치하는 스킬이 아닙니다.** 레포 전체가 하나의 스킬입니다.
+
+```
+제품 하나 = 이 레포 클론 하나
+```
+
+`/wire` 명령은 `.claude/commands/wire.md` 한 파일이지만, 그 안에서 `agents/`, `playbooks/`,
+`context/` 의 파일 30여 개를 **상대 경로로** 불러옵니다. 명령 파일만 떼어내면 동작하지 않습니다.
+그래서 "스킬을 설치"하는 게 아니라 **폴더를 통째로 복제**하는 것이 곧 설치입니다.
+
+```bash
+# 제품 A
+git clone https://github.com/pentaxzs/productdesign_harness.git cardfit
+cd cardfit && claude        # → /wire
+
+# 제품 B — 새로 클론
+git clone https://github.com/pentaxzs/productdesign_harness.git japanese-app
+cd japanese-app && claude   # → /wire
+```
+
+각 폴더는 완전히 독립적입니다. `context/`(제품 배경·UX 원칙·디자인 시스템)와
+`specs/` · `prototype/` · `evaluation/`(산출물)이 제품별로 분리되어 서로 영향을 주지 않습니다.
+
+> **제품마다 달라지는 게 정상입니다.** 일본어 학습 앱과 카드 추천 서비스가 같은 UX 원칙,
+> 같은 디자인 시스템을 쓸 이유가 없습니다. 클론을 분리하면 각자 다르게 가져갈 수 있습니다.
+
+하네스가 개선되면 [업스트림에서 받아옵니다](#하네스-업데이트-받기).
+
+---
+
 ## 빠른 시작
 
 ### 1. 제품 이름으로 클론
@@ -90,6 +122,39 @@ workspace/
 | `/proto` | Prototype 단계만 실행 |
 | `/critique` | Critique 단계만 실행 |
 
+### 진행 방식 — 단계마다 멈춥니다
+
+각 단계가 끝나면 산출물을 요약해 보여주고 **멈춰서 묻습니다.**
+
+```
+### ✅ Phase 1 — Planner 완료
+
+| 산출물 | 내용 |
+|--------|------|
+| specs/user-flow.md | Flow 5개, 화면 7개, 막다른 화면 0 |
+| specs/screens.md   | 화면별 Spec (핵심 정보·CTA·상태·DS 컴포넌트) |
+| evaluation/checklist.md | Part A 생성 — Key Scenarios 5개 |
+
+**다음**: Phase 2 — Figma 와이어프레임 생성
+
+? Phase 1 결과로 진행할까요?
+  1. 다음 단계 진행       — 다음 단계가 끝나면 다시 묻습니다
+  2. 끝까지 진행          — 이후 묻지 않고 완주 (요약은 계속 표시)
+  3. 화면 범위 조정       — 화면 수를 줄이거나 시나리오를 바꿉니다
+  4. 여기서 멈춤
+```
+
+**2번을 고르면 그 뒤로는 묻지 않습니다.** 결과를 한 번 보고 판단한 뒤 맡길 수 있습니다.
+처음부터 묻지 않게 하려면 `--auto` 를 붙입니다.
+
+```bash
+/wire 일본어 학습 앱           # 단계마다 멈추고 물음 (기본)
+/wire 일본어 학습 앱 --auto    # 처음부터 끝까지 묻지 않음
+```
+
+Critic이 Revise 판정을 내렸을 때의 수정(Refine)은 **어느 경우에도 멈추지 않습니다.**
+고칠 것이 이미 명확하기 때문입니다. 최종 판정이 날 때 한 번만 보고합니다.
+
 ## 파이프라인
 
 ```
@@ -101,6 +166,8 @@ Phase 5: Refine      — Critique에서 Revise 판정 시 수정 (최대 3회)
 Phase 6: Human Review — 최종 확인
 ```
 
+각 Phase가 끝날 때마다 멈춰서 산출물 요약과 선택지를 보여줍니다 ([진행 방식](#진행-방식--단계마다-멈춥니다)).
+
 **Figma MCP가 없어도 동작합니다.** Phase 1의 1-Pager는 마크다운으로, Phase 2의 와이어프레임은 HTML 경로로 자동 전환되며, 파이프라인은 중단되지 않습니다. Codex 환경이 이 경로를 사용합니다.
 
 ### 프로토타입 실행
@@ -111,6 +178,17 @@ cd prototype && python3 -m http.server 8000
 ```
 
 `file://`로 열면 `sessionStorage` 기반 상태 유지가 동작하지 않습니다.
+
+프로토타입은 URL 쿼리로 상태를 바꿔 볼 수 있습니다:
+
+| 쿼리 | 보이는 것 |
+|------|----------|
+| `?reset=1` | 저장된 상태를 비우고 기본 데모 상태로 복원 |
+| `?seed=0` | 데이터가 전혀 없는 신규 사용자 (Empty State) |
+| `?state=loading` | 로딩 상태 |
+| `?state=error` | 오류 상태 |
+
+목업에는 실제 네트워크 실패가 없어서, 이 쿼리가 없으면 Empty/Loading/Error를 볼 방법이 없습니다.
 
 ## 구조
 
@@ -132,7 +210,7 @@ productdesign_harness/
 ├── playbooks/                   ← Playbook (실행 절차)
 │   ├── discover-context.md      ←   Discovery (질문)
 │   ├── create-figma-onepager.md ←   Figma 1-Pager 생성
-│   └── ...                      ←   총 22개
+│   └── ...                      ←   총 23개
 ├── context/                     ← Context (배경 지식)
 │   ├── product-context.md       ←   제품 배경 (빈 템플릿 — Discovery가 채움)
 │   ├── ux-principles.md         ←   UX 원칙 (수정해서 사용)
@@ -165,7 +243,7 @@ productdesign_harness/
 | `context/ux-principles.md` | 팀의 원칙이 따로 있을 때 | 범용 7원칙이 적용됩니다 |
 | `context/product-context.md` | 미리 채워두고 싶을 때 | Discovery 단계에서 AI가 질문해서 채웁니다 |
 | `evaluation/checklist.md` | Part B(공통 기준)를 바꾸고 싶을 때 | Part A(제품별)는 Planner가 자동 생성합니다 |
-| `playbooks/` | 절차를 추가·변경할 때 | 기본 22개 Playbook이 실행됩니다 |
+| `playbooks/` | 절차를 추가·변경할 때 | 기본 23개 Playbook이 실행됩니다 |
 
 **Playbook 추가**: `playbooks/`에 새 .md 파일을 만들고 Agent(`agents/*.md`)나 Skill(`.claude/commands/*.md`)의 실행 순서에 추가합니다.
 

@@ -17,6 +17,8 @@ Wireframe Agent를 실행한다.
    - `playbooks/implement-responsive-figma.md` — Mobile(375px) + Desktop(1440px) 프레임 쌍
 5. 생성된 프레임 nodeId를 `specs/figma-info.md`에 기록한다.
 6. Agent의 완료 조건을 확인한다.
+7. `playbooks/report-checkpoint.md`를 실행해 체크포인트를 보고한다.
+   산출물 요약을 보여주고 **멈춰서** 다음 동작을 묻는다 (`--auto`가 있으면 묻지 않는다).
 
 ## Figma를 사용할 수 없는 경우
 MCP가 연결되지 않았거나 사용자가 Figma를 원하지 않으면 **HTML 경로로 전환한다.**

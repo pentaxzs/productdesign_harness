@@ -22,6 +22,8 @@ Planner Agent를 실행한다.
    - `evaluation/checklist.md` (Part A)
 6. Agent의 완료 조건을 확인한다.
 7. User Flow와 Screen 목록을 사용자에게 보여주고 확인을 받는다.
+8. `playbooks/report-checkpoint.md`를 실행해 체크포인트를 보고한다.
+   산출물 요약을 보여주고 **멈춰서** 다음 동작을 묻는다 (`--auto`가 있으면 묻지 않는다).
 
 ## Input
 사용자의 요청: $ARGUMENTS

@@ -1,5 +1,23 @@
 전체 파이프라인을 실행한다: Plan → Wireframe → Prototype → Critique → Refine → Human Review
 
+## 진행 방식
+
+**각 Phase가 끝나면 멈추고 사용자에게 묻는다.** 이것이 기본이다.
+
+`playbooks/report-checkpoint.md`가 출력 형식과 선택지를 정의한다.
+**각 Phase를 마칠 때마다 이 Playbook을 실행한다.**
+
+체크포인트 선택지:
+1. **다음 단계 진행** — 다음 Phase로 가고 그 단계가 끝나면 다시 묻는다
+2. **끝까지 진행** — 이후 묻지 않고 끝까지 간다 (요약은 계속 출력)
+3. **〈이 Phase에서 바꿀 것〉** — 해당 Phase 재실행
+4. **여기서 멈춤**
+
+사용자가 2번을 고른 뒤에는 남은 체크포인트에서 멈추지 않는다.
+`$ARGUMENTS`에 `--auto`가 있으면 처음부터 멈추지 않는다.
+
+**Phase 5 (Refine)는 어느 경우에도 멈추지 않는다.** 고칠 것이 이미 명확하기 때문이다.
+
 ## 실행 절차
 
 ### Phase 1: Plan (Planner Agent)
@@ -20,7 +38,8 @@
    - `playbooks/create-screen-spec.md`
    - `playbooks/create-checklist.md` — **Critic이 채점할 기준을 미리 확정한다**
 6. Output: `context/product-context.md` (업데이트), Figma 1-pager, `specs/figma-info.md`, `specs/user-flow.md`, `specs/screens.md`, `evaluation/checklist.md` (Part A)
-7. **체크포인트**: Figma 1-pager 링크 + User Flow와 Screen 목록을 사용자에게 보여주고 확인을 받는다. 사용자가 수정을 요청하면 반영한다.
+7. **체크포인트**: `playbooks/report-checkpoint.md`를 실행한다.
+   산출물 표에 Key Scenarios 개수, 화면 개수, 막다른 화면 0 여부, checklist Part A 생성 여부, Figma 사용/폴백을 넣는다.
 
 ### Phase 2: Wireframe (Wireframe Agent)
 1. `agents/wireframe.md`를 읽는다.
@@ -32,6 +51,7 @@
    - `playbooks/build-wireframe-figma.md` — Figma에 와이어프레임 프레임 생성 (`use_figma`)
    - `playbooks/implement-responsive-figma.md` — Mobile(375px) + Desktop(1440px) 프레임 쌍
 5. Output: Figma 파일 내 화면별 와이어프레임 프레임, `specs/figma-info.md` 업데이트
+6. **체크포인트**: `playbooks/report-checkpoint.md` — 와이어프레임 화면 수, Mobile/Desktop 쌍 여부, Figma 사용/폴백
 
 **Figma를 사용할 수 없는 경우** (MCP 미연결 등)
 파이프라인을 중단하지 않는다. 사용자에게 전환 사실을 알리고 HTML 경로로 진행한다:
@@ -51,6 +71,7 @@
    - `playbooks/implement-interactions.md`
    - `playbooks/manage-state.md`
 4. Output: Interactive Prototype (`prototype/index.html`, `styles.css`, `app.js`)
+5. **체크포인트**: `playbooks/report-checkpoint.md` — 생성 파일, 구현 화면 수, 상태 제어 쿼리 구현 여부
 
 > Phase 2의 산출물은 **Figma 프레임이지 HTML이 아니다.**
 > `build-prototype-html.md`를 건너뛰면 이후 Playbook들이 존재하지 않는 HTML을 전제하게 된다.
@@ -65,7 +86,9 @@
    - `playbooks/check-design-system.md`
    - `playbooks/write-critique-report.md`
 4. Output: `evaluation/critique-report.md`
-5. **체크포인트**: Critique 결과 요약을 사용자에게 보여준다.
+5. **체크포인트**: `playbooks/report-checkpoint.md` — **판정(Pass/Revise)**, 실행 검증 수행 여부,
+   콘솔 에러 수, Critical/Major/Minor 건수.
+   판정이 Revise면 선택지를 "수정 진행 / 확인만 하고 멈춤 / 특정 이슈 무시하고 Pass"로 바꾼다.
 
 > 코드를 읽기 전에 **먼저 띄워본다.** 백지 화면, 레이아웃 깨짐, 반응 없는 버튼은
 > 소스만 읽어서는 보이지 않는다.
@@ -74,8 +97,12 @@
 Critique 판정이 **Revise**이면:
 1. 수정 지시를 읽는다.
 2. Wireframe Agent 수정 사항은 Wireframe Agent 역할로, Prototype Agent 수정 사항은 Prototype Agent 역할로 수정한다.
-3. Phase 4 (Critique)를 다시 실행한다.
-4. 최대 3회 반복한다.
+3. 수정한 내용을 `evaluation/critique-report.md`에 **회차별로 덧붙인다** (무엇을 고쳤고 재검증 결과가 무엇인지).
+4. Phase 4 (Critique)를 다시 실행한다. 실행 검증부터 다시 한다.
+5. 최대 3회 반복한다.
+
+Refine 각 회차에서는 멈추지도, 보고하지도 않는다. **최종 판정이 날 때 한 번만** 보고한다.
+같은 ID의 이슈가 2회 연속 남으면 그 사실을 보고에 명시한다 — 수정 방향이 틀렸다는 신호다.
 
 ### Phase 6: Human Review
 Pass 판정이거나 Refine 3회 완료 시:
@@ -86,7 +113,9 @@ Pass 판정이거나 Refine 3회 완료 시:
    ```
    (`file://`로 열면 `sessionStorage` 기반 상태 유지가 동작하지 않는다)
 2. Critique Report 요약을 보여준다.
-3. Figma 와이어프레임을 생성했다면 Figma 파일 링크도 함께 안내한다.
+3. 상태 제어 쿼리로 각 상태를 직접 볼 수 있음을 안내한다:
+   `?reset=1`(초기화) `?seed=0`(신규 사용자) `?state=loading` `?state=error`
+4. Figma 와이어프레임을 생성했다면 Figma 파일 링크도 함께 안내한다.
 
 ## Input
 사용자의 요청: $ARGUMENTS
