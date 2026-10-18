@@ -54,6 +54,13 @@ Production 개발이 아니라, "이 경험으로 개발 논의를 시작할 수
 |-------|------|------|-----------|
 | Planner | `agents/planner.md` | PM — 문제 구조화 | discover-context, create-figma-onepager, analyze-requirements, create-user-flow, create-screen-spec |
 | Wireframe | `agents/wireframe.md` | UX Designer — 화면 구조 설계 | map-components, design-layout, build-wireframe-html, implement-responsive |
+
+> Codex 환경에는 Figma MCP가 없으므로 **HTML 경로**를 사용한다.
+> Claude Code의 기본 경로(Figma)와 달리 `build-wireframe-html` + `implement-responsive`가 와이어프레임을 담당하며,
+> 이어지는 Prototype 단계에서 `build-prototype-html`은 생략한다 (HTML이 이미 존재하므로).
+>
+> 브라우저 실행 검증(`check-prototype-runs`)을 수행할 수 없으면
+> 리포트에 "실행 검증 미수행"을 명시하고, `Pass` 판정에 단서를 붙인다.
 | Prototype | `agents/prototype.md` | Interaction Designer — 경험 연결 | create-mock-data, connect-navigation, implement-interactions, manage-state |
 | Critic | `agents/critic.md` | Design Reviewer — 결과 검증 | check-requirements, check-ux-principles, check-design-system, write-critique-report |
 

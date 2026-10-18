@@ -54,7 +54,8 @@ const responses = {
 > UX 원칙 3(신뢰감)에 따라 `reason`을 반드시 포함한다. 자동 생성 결과에는 근거가 보여야 한다.
 
 ## Output
-`prototype/js/data.js`에 작성
+`prototype/app.js` 상단의 데이터 섹션에 작성한다.
+(파일 구조는 `playbooks/build-prototype-html.md` 참조 — index.html / styles.css / app.js 3개 고정)
 
 ## 검증
 - 주 엔티티가 12개 이상인가?

@@ -28,7 +28,7 @@
 
 ### 2. 전역 State 객체 구성
 ```javascript
-// prototype/js/state.js
+// prototype/app.js — 상태 섹션
 
 const AppState = {
   // 1단계에서 도출한 항목들

@@ -21,18 +21,24 @@
 6. `evaluation/checklist.md` — 정량적 체크리스트
 
 ## 사용하는 Playbooks
-1. `playbooks/check-requirements.md` — 요구사항 충족 여부 점검
-2. `playbooks/check-ux-principles.md` — UX 원칙 위반 점검
-3. `playbooks/check-design-system.md` — DS 준수 여부 점검
-4. `playbooks/write-critique-report.md` — 구조화된 피드백 리포트 작성
+1. `playbooks/check-prototype-runs.md` — **브라우저 실행 검증** (반드시 첫 번째)
+2. `playbooks/check-requirements.md` — 요구사항 충족 여부 점검
+3. `playbooks/check-ux-principles.md` — UX 원칙 위반 점검
+4. `playbooks/check-design-system.md` — DS 준수 여부 점검
+5. `playbooks/write-critique-report.md` — 구조화된 피드백 리포트 작성
 
 ## 실행 순서
 ```
-요구사항 점검 → UX 원칙 점검 → DS 준수 점검 → 리포트 작성 → 판정
+실행 검증 → 요구사항 점검 → UX 원칙 점검 → DS 준수 점검 → 리포트 작성 → 판정
 ```
+
+> **코드를 읽기 전에 먼저 띄워본다.**
+> 실행해보면 바로 보이는 문제(백지 화면, 레이아웃 깨짐, 반응 없는 버튼)를
+> 코드 검토로 찾으려 하면 놓친다.
 
 ## Input
 - `prototype/` 디렉토리의 HTML/CSS/JS 파일들
+- **브라우저에서 실행한 결과** (스크린샷, 콘솔 에러, Happy Path 수행 결과)
 - 위의 모든 Context 파일들
 
 ## Output
@@ -41,6 +47,9 @@
 ## 판정 기준
 - **Pass**: Critical Issue 0건, Major Issue 2건 이하 → Human Review 진행
 - **Revise**: Critical Issue 1건 이상 또는 Major Issue 3건 이상 → 수정 후 재검증
+
+**실행 검증을 수행하지 못한 경우 Pass를 단정하지 않는다.**
+"Pass (실행 미검증)"으로 표기하고 그 이유를 명시한다.
 
 ## 검증 루프
 Revise 판정 시:

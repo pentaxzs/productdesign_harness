@@ -7,6 +7,7 @@
 - Critic Agent (주 사용)
 
 ## Input
+- `check-prototype-runs` 결과 (브라우저 실행 검증)
 - `check-requirements` 결과
 - `check-ux-principles` 결과
 - `check-design-system` 결과
@@ -25,11 +26,22 @@
 ## Summary
 | 항목 | 결과 |
 |------|------|
+| 실행 검증 | 수행 / 미수행 |
+| 콘솔 에러 | X건 |
+| Happy Path 완주 | 가능/불가능 |
 | 요구사항 충족 | M/N |
 | Flow 완주 | 가능/불가능 |
 | UX 원칙 위반 | X건 |
 | DS 위반 | Y건 |
 | 상태 누락 | Z건 |
+
+---
+
+## 실행 검증
+`check-prototype-runs.md`의 Output 형식을 그대로 옮긴다.
+(콘솔 에러 / 화면별 렌더링 / Happy Path / 상태 전환)
+
+실행 검증을 수행하지 못했으면 **"실행 검증 미수행"과 그 이유**를 적는다.
 
 ---
 
@@ -75,6 +87,9 @@ Revise 판정 시, Wireframe/Prototype Agent에게 전달할 수정 목록:
 ## 판정 기준
 - **Pass**: Critical 0건 AND Major 2건 이하
 - **Revise**: Critical 1건 이상 OR Major 3건 이상
+
+실행 검증을 수행하지 못한 경우 **"Pass (실행 미검증)"** 으로 표기한다.
+검증하지 않은 것을 검증한 것처럼 기록하지 않는다.
 
 ## 심각도 분류 기준
 | 심각도 | 기준 |

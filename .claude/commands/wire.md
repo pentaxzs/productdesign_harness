@@ -31,27 +31,42 @@
    - `playbooks/implement-responsive-figma.md` — Mobile(375px) + Desktop(1440px) 프레임 쌍
 5. Output: Figma 파일 내 화면별 와이어프레임 프레임, `specs/figma-info.md` 업데이트
 
+**Figma를 사용할 수 없는 경우** (MCP 미연결 등)
+파이프라인을 중단하지 않는다. 사용자에게 전환 사실을 알리고 HTML 경로로 진행한다:
+   - `playbooks/build-wireframe-html.md` — HTML 와이어프레임 작성
+   - `playbooks/implement-responsive.md` — 반응형 구현
+
+이 경우 Phase 3의 `build-prototype-html.md`는 **생략한다** (HTML이 이미 존재하므로).
+
 ### Phase 3: Prototype (Prototype Agent)
 1. `agents/prototype.md`를 읽는다.
-2. Context를 읽는다: `specs/user-flow.md`, `specs/screens.md`, `specs/figma-info.md`, `context/ux-principles.md`
-3. Figma 와이어프레임을 참조한다: `get_design_context` 또는 `get_screenshot`으로 Figma 와이어프레임의 구조와 레이아웃을 확인한다.
+2. Context를 읽는다: `specs/user-flow.md`, `specs/screens.md`, `specs/figma-info.md`, `context/ux-principles.md`, `context/design-system.md`
 3. Playbook을 순서대로 실행한다:
+   - `playbooks/build-prototype-html.md` — **Figma 와이어프레임 → HTML 골격** (반드시 첫 번째)
+     (`get_design_context` / `get_screenshot`으로 프레임 구조를 확인한 뒤 HTML로 옮긴다)
    - `playbooks/create-mock-data.md`
    - `playbooks/connect-navigation.md`
    - `playbooks/implement-interactions.md`
    - `playbooks/manage-state.md`
-4. Output: Interactive Prototype (`prototype/index.html`)
+4. Output: Interactive Prototype (`prototype/index.html`, `styles.css`, `app.js`)
+
+> Phase 2의 산출물은 **Figma 프레임이지 HTML이 아니다.**
+> `build-prototype-html.md`를 건너뛰면 이후 Playbook들이 존재하지 않는 HTML을 전제하게 된다.
 
 ### Phase 4: Critique (Critic Agent)
 1. `agents/critic.md`를 읽는다.
 2. 모든 Context + Specs + Prototype 파일을 읽는다.
 3. Playbook을 순서대로 실행한다:
+   - `playbooks/check-prototype-runs.md` — **브라우저 실행 검증** (반드시 첫 번째)
    - `playbooks/check-requirements.md`
    - `playbooks/check-ux-principles.md`
    - `playbooks/check-design-system.md`
    - `playbooks/write-critique-report.md`
 4. Output: `evaluation/critique-report.md`
 5. **체크포인트**: Critique 결과 요약을 사용자에게 보여준다.
+
+> 코드를 읽기 전에 **먼저 띄워본다.** 백지 화면, 레이아웃 깨짐, 반응 없는 버튼은
+> 소스만 읽어서는 보이지 않는다.
 
 ### Phase 5: Refine (조건부)
 Critique 판정이 **Revise**이면:
@@ -62,9 +77,14 @@ Critique 판정이 **Revise**이면:
 
 ### Phase 6: Human Review
 Pass 판정이거나 Refine 3회 완료 시:
-1. 최종 Prototype 위치를 안내한다: `prototype/index.html`
+1. 최종 Prototype 실행 방법을 안내한다:
+   ```bash
+   cd prototype && python3 -m http.server 8000
+   # → http://localhost:8000
+   ```
+   (`file://`로 열면 `sessionStorage` 기반 상태 유지가 동작하지 않는다)
 2. Critique Report 요약을 보여준다.
-3. 브라우저에서 확인하도록 안내한다.
+3. Figma 와이어프레임을 생성했다면 Figma 파일 링크도 함께 안내한다.
 
 ## Input
 사용자의 요청: $ARGUMENTS
