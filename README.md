@@ -13,7 +13,7 @@ AI 프로토타이핑을 위한 Harness Engineering 템플릿.
 
 ```bash
 # 1. 클론
-git clone https://github.com/mong-gle-c/productdesign_harness.git
+git clone https://github.com/pentaxzs/productdesign_harness.git
 cd productdesign_harness
 
 # 2. Claude Code 실행
@@ -102,6 +102,7 @@ productdesign_harness/
 ## 관련 글
 
 이 하네스의 설계 과정과 배경은 MakersNote 38호에서 자세히 다루고 있습니다.
+👉 https://maily.so/makersnote/
 
 ## License
 
