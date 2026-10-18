@@ -6,8 +6,9 @@ AI 프로토타이핑을 위한 Harness Engineering 템플릿.
 
 ## 사용 환경
 
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (커스텀 슬래시 명령어 지원)
-- Figma MCP 연동 시 Figma에 직접 와이어프레임 생성 가능
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — 슬래시 명령어(`/wire`)로 파이프라인 실행
+- [Codex](https://github.com/openai/codex) — `AGENTS.md` 기반으로 파이프라인 실행
+- Figma MCP 연동 시 Figma에 직접 와이어프레임 생성 가능 (Claude Code만 해당)
 
 ## 빠른 시작
 
@@ -15,17 +16,27 @@ AI 프로토타이핑을 위한 Harness Engineering 템플릿.
 # 1. 클론
 git clone https://github.com/pentaxzs/productdesign_harness.git
 cd productdesign_harness
+```
 
-# 2. Claude Code 실행
+### Claude Code
+
+```bash
 claude
-
-# 3. 파이프라인 시작
 /wire 카드 추천 서비스 만들어줘
 ```
 
 `/wire`를 실행하면 AI가 먼저 질문합니다. 답변하면 기획 → 와이어프레임 → 프로토타입 → 검증까지 자동으로 진행됩니다.
 
-## 명령어
+### Codex
+
+```bash
+codex
+> 카드 추천 서비스 프로토타입을 만들어줘. AGENTS.md의 파이프라인을 따라 실행해줘.
+```
+
+Codex는 `AGENTS.md`를 자동으로 읽고, 같은 파이프라인(Plan → Wireframe → Prototype → Critique)을 실행합니다. 단, Figma MCP 연동은 지원되지 않으므로 와이어프레임은 HTML로 생성됩니다.
+
+## 명령어 (Claude Code)
 
 | 명령 | 설명 |
 |------|------|
@@ -50,8 +61,9 @@ Phase 6: Human Review — 최종 확인
 
 ```
 productdesign_harness/
-├── CLAUDE.md                    ← 하네스 규칙
-├── .claude/commands/            ← Skill (트리거)
+├── CLAUDE.md                    ← 하네스 규칙 (Claude Code)
+├── AGENTS.md                    ← 하네스 규칙 (Codex)
+├── .claude/commands/            ← Skill (트리거, Claude Code 전용)
 │   ├── wire.md                  ←   전체 파이프라인
 │   ├── plan-wire.md             ←   Plan만
 │   ├── wireframe.md             ←   Wireframe만
