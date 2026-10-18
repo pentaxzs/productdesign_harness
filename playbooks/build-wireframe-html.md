@@ -6,24 +6,23 @@
 ## 사용하는 Agent
 - Wireframe Agent (주 사용)
 
+> **이 Playbook은 Figma를 사용할 수 없을 때의 경로다.**
+> 기본 경로는 `build-wireframe-figma.md`(Phase 2) → `build-prototype-html.md`(Phase 3)이다.
+> Codex 환경처럼 Figma MCP가 없으면 이 Playbook이 와이어프레임 단계를 대신한다.
+
 ## 파일 구조
+**단일 페이지 + Hash 라우팅.** 화면마다 별도 `.html` 파일을 만들지 않는다.
+화면 간 상태 유지가 페이지를 새로 로드하면 깨지기 때문이다.
+
 ```
 prototype/
-├── index.html              ← 메인/홈 화면
-├── search-results.html     ← 검색 결과
-├── ai-recommend.html       ← AI 추천
-├── compare.html            ← 카드 비교
-├── detail.html             ← 카드 상세
-├── styles/
-│   ├── tokens.css          ← DS 토큰 (색상, 간격, radius, 타이포)
-│   ├── components.css      ← DS 컴포넌트 스타일
-│   ├── layout.css          ← 레이아웃/그리드
-│   └── states.css          ← 상태별 스타일 (empty, loading, error)
-└── js/
-    ├── data.js             ← 목업 데이터
-    ├── state.js            ← 상태 관리
-    └── app.js              ← 인터랙션
+├── index.html      ← 모든 화면을 <section>으로 포함
+├── styles.css      ← DS 토큰 + 컴포넌트 + 레이아웃 + 상태 스타일
+└── app.js          ← 목업 데이터 + 상태 + 네비게이션 + 인터랙션
 ```
+
+이 Playbook은 `index.html`과 `styles.css`까지만 만든다.
+`app.js`는 Phase 3의 Playbook들이 채운다.
 
 ## HTML 작성 규칙
 

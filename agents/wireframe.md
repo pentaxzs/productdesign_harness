@@ -48,6 +48,7 @@ Screen Spec을 받아 실제 화면의 정보 계층, CTA 배치, 컴포넌트 �
 - `specs/figma-info.md` (Figma 파일 정보)
 
 ## Output
+- `specs/layouts.md` (화면별 레이아웃 구조도 — `design-layout.md` 산출물)
 - Figma 파일 내 화면별 와이어프레임 프레임 (Mobile 375px + Desktop 1440px)
 - `specs/figma-info.md` 업데이트 (생성된 프레임 nodeId 기록)
 

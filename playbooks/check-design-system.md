@@ -13,16 +13,17 @@ Prototype이 Design System 컴포넌트와 토큰을 올바르게 사용했는�
 - DS에 있는 컴포넌트 대신 커스텀 UI를 만든 곳이 있는가?
 - 커스텀 UI가 불가피한 경우, 사유가 타당한가?
 
-점검 대상:
+점검 대상 — `playbooks/map-components.md`의 매핑 결과를 기준으로 행을 채운다.
+해당 제품에 없는 요소는 행에서 제외한다.
+
 | 화면 요소 | 기대 컴포넌트 | 실제 사용 |
 |----------|-------------|----------|
 | 헤더 | Header | ? |
-| 카드 목록 | Card Grid | ? |
+| 항목 목록 | Card Grid | ? |
 | 검색 | Search | ? |
 | 필터 | Tag Toggle Group | ? |
 | CTA | Button | ? |
 | 모달 | Dialog | ? |
-| 카드 비주얼 | Credit card | ? |
 | 하단 | Footer | ? |
 
 ### 2. 토큰 준수

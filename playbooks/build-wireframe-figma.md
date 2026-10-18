@@ -9,6 +9,7 @@
 ## 전제 조건
 - `specs/figma-info.md`에 Figma fileKey가 기록되어 있어야 한다.
 - `playbooks/map-components.md`와 `playbooks/design-layout.md`가 완료되어야 한다.
+- `specs/layouts.md`에 화면별 레이아웃 구조도가 작성되어 있어야 한다.
 - Figma MCP `figma-use` 스킬을 로드한 상태여야 한다.
 
 ## Figma 파일 구조
@@ -85,14 +86,17 @@ MCP 호출 횟수를 최소화하기 위해:
 → 모든 프레임 ID 반환
 ```
 
-**호출 2~6**: 화면별로 내부 콘텐츠 채우기 (한 호출에 Mobile+Desktop 1쌍)
-```
-→ 호출 2: 홈 (Mobile + Desktop)
-→ 호출 3: 검색 결과
-→ 호출 4: AI 추천 결과
-→ 호출 5: 카드 비교
-→ 호출 6: 카드 상세
-```
+**호출 2~N**: 화면별로 내부 콘텐츠 채우기 (한 호출에 Mobile+Desktop 1쌍)
+`specs/screens.md`의 화면 수만큼 호출한다.
+
+> 예시 (카드 추천 서비스, 화면 5개):
+> ```
+> → 호출 2: 홈 (Mobile + Desktop)
+> → 호출 3: 검색 결과
+> → 호출 4: AI 추천 결과
+> → 호출 5: 카드 비교
+> → 호출 6: 카드 상세
+> ```
 
 **호출 7**: 스크린샷으로 검증
 ```

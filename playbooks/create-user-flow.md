@@ -32,9 +32,11 @@ Edge Case에 대한 대응 경로를 추가한다.
 
 ### 5. Flow 간 연결점 표시
 시나리오 간 이동 가능한 지점을 표시한다.
-- 검색 결과에서 AI 추천으로 전환
-- AI 추천 결과에서 검색으로 전환
-- 어디서든 비교 화면으로 이동
+- 한 Flow의 중간 화면에서 다른 Flow로 전환되는 지점
+- 어느 Flow에서든 도달할 수 있는 공통 화면
+- 전환 후 원래 Flow로 돌아올 수 있는가
+
+> 예시 (카드 추천 서비스): 검색 결과 ↔ AI 추천 상호 전환, 어디서든 비교 화면으로 이동
 
 ## Output 형식
 `specs/user-flow.md`에 작성:
@@ -72,3 +74,5 @@ Edge Case에 대한 대응 경로를 추가한다.
 - 모든 Flow에 시작점과 끝점이 있는가?
 - 막다른 길(Dead End)이 없는가?
 - Edge Case 경로가 Happy Path로 복귀할 수 있는가?
+- `context/product-context.md`의 Key Scenarios가 **모두** Flow로 커버되는가?
+- Flow에 등장하는 모든 화면이 다음 단계(`create-screen-spec`)에서 Spec을 갖게 되는가?

@@ -30,6 +30,22 @@ Production 개발이 아니라, "이 경험으로 개발 논의를 시작할 수
 - 실제 API 호출 없이 목업 데이터로 동작한다.
 - 화면 간 네비게이션, 상태 변화, 인터랙션이 동작해야 한다.
 
+### Prototype 파일 구조 (고정)
+```
+prototype/
+├── index.html      ← 모든 화면을 <section>으로 포함 (단일 페이지 + hash 라우팅)
+├── styles.css      ← DS 토큰 + 반응형
+└── app.js          ← 목업 데이터 + 상태 + 네비게이션 + 인터랙션
+```
+화면마다 별도 `.html` 파일을 만들지 않는다. 페이지를 새로 로드하면 화면 간 상태 유지가 깨진다.
+
+**실행은 반드시 로컬 서버로 한다** — `cd prototype && python3 -m http.server 8000`
+`file://`로 열면 `sessionStorage` 기반 상태 유지가 동작하지 않는다.
+
+### 검증
+- Critic은 코드를 읽기 전에 **프로토타입을 브라우저에서 띄워본다.**
+- 실행 검증을 못 한 경우 `Pass`를 단정하지 않고 "Pass (실행 미검증)"으로 표기한다.
+
 ---
 
 ## 구조: Skill → Agent → Playbook
@@ -65,23 +81,27 @@ Skill (트리거 명령)  →  Agent (주체)  →  Playbook (절차)
 
 | Agent | 파일 | 역할 | Playbooks |
 |-------|------|------|-----------|
-| Planner | `agents/planner.md` | PM — 문제 구조화 | discover-context, create-figma-onepager, analyze-requirements, create-user-flow, create-screen-spec |
+| Planner | `agents/planner.md` | PM — 문제 구조화 | discover-context, create-figma-onepager, analyze-requirements, create-user-flow, create-screen-spec, **create-checklist** |
 | Wireframe | `agents/wireframe.md` | UX Designer — 화면 구조 설계 (Figma) | map-components, design-layout, build-wireframe-figma, implement-responsive-figma |
-| Prototype | `agents/prototype.md` | Interaction Designer — 경험 연결 | create-mock-data, connect-navigation, implement-interactions, manage-state |
-| Critic | `agents/critic.md` | Design Reviewer — 결과 검증 | check-requirements, check-ux-principles, check-design-system, write-critique-report |
+| Prototype | `agents/prototype.md` | Interaction Designer — 경험 연결 | **build-prototype-html**, create-mock-data, connect-navigation, implement-interactions, manage-state |
+| Critic | `agents/critic.md` | Design Reviewer — 결과 검증 | **check-prototype-runs**, check-requirements, check-ux-principles, check-design-system, write-critique-report |
 
 ---
 
 ## Pipeline (/wire)
 
 ```
-Phase 1: Plan     (Planner Agent)     → context/ + specs/ + Figma 1-Pager
+Phase 1: Plan     (Planner Agent)     → context/ + specs/ + Figma 1-Pager + checklist Part A
   ↓ Discovery: 부족한 맥락은 질문으로 확보
-  ↓ Figma 1-Pager 생성 (와이어프레임 좌측 배치)
+  ↓ Figma 1-Pager 생성 (Figma 불가 시 specs/product-1-pager.md 로 폴백)
+  ↓ Critic이 채점할 기준(checklist Part A)을 여기서 확정
   ↓ 사용자 확인 (체크포인트)
 Phase 2: Wireframe (Wireframe Agent)  → Figma 와이어프레임 (Mobile + Desktop)
+  ↓ Figma 사용 불가 시 HTML 경로로 폴백 (파이프라인 중단하지 않음)
 Phase 3: Prototype (Prototype Agent)  → prototype/ Interactive
+  ↓ Figma 프레임을 HTML 골격으로 변환한 뒤 인터랙션을 붙인다
 Phase 4: Critique  (Critic Agent)     → evaluation/
+  ↓ 브라우저 실행 검증 → 코드 검토 순서
   ↓ 사용자에게 결과 보여줌 (체크포인트)
 Phase 5: Refine    (조건부, 최대 3회) → prototype/ 수정
 Phase 6: Human Review                → 최종 안내
@@ -119,16 +139,19 @@ productdesign_harness/
 │   ├── analyze-requirements.md
 │   ├── create-user-flow.md
 │   ├── create-screen-spec.md
+│   ├── create-checklist.md          ← 검증 체크리스트 Part A 생성
 │   ├── map-components.md
 │   ├── design-layout.md
 │   ├── build-wireframe-figma.md
 │   ├── implement-responsive-figma.md
-│   ├── build-wireframe-html.md       ← (레거시, 참고용)
-│   ├── implement-responsive.md       ← (레거시, 참고용)
+│   ├── build-wireframe-html.md       ← (Figma 미사용 시 폴백)
+│   ├── implement-responsive.md       ← (Figma 미사용 시 폴백)
+│   ├── build-prototype-html.md       ← Figma 와이어프레임 → HTML 골격
 │   ├── create-mock-data.md
 │   ├── connect-navigation.md
 │   ├── implement-interactions.md
 │   ├── manage-state.md
+│   ├── check-prototype-runs.md       ← 브라우저 실행 검증
 │   ├── check-requirements.md
 │   ├── check-ux-principles.md
 │   ├── check-design-system.md
@@ -139,6 +162,12 @@ productdesign_harness/
 │   └── design-system.md
 ├── specs/                    ← Planner 산출물
 ├── prototype/                ← Wireframe + Prototype 산출물
-└── evaluation/               ← Critic 산출물
-    └── checklist.md
+├── evaluation/               ← Critic 산출물
+│   └── checklist.md          ← Part A(제품별, 자동 생성) + Part B(공통, 고정)
+└── examples/cardfit/         ← 완성된 산출물 예시 (참고용, 파이프라인은 참조하지 않음)
 ```
+
+## 제품 중립성
+이 하네스는 **제품 1개 = 클론 1개**를 전제로 한 템플릿입니다.
+`agents/`, `playbooks/`, `context/ux-principles.md`, `context/design-system.md`, `evaluation/checklist.md`에는
+특정 제품의 전제를 넣지 않는다. 예시가 필요하면 `## 예시` 헤딩이나 `>` 인용으로 명확히 구분해서 작성한다.

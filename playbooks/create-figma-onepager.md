@@ -9,7 +9,16 @@ Discovery 결과를 Figma 파일에 1-pager 프레임으로 구성한다.
 
 ## 전제 조건
 - `playbooks/discover-context.md` (Discovery)가 완료되어 `context/product-context.md`가 채워져 있어야 한다.
-- Figma MCP 인증이 완료되어 있어야 한다.
+
+> **Figma를 사용할 수 없는 경우** (MCP 미인증·미연결, Codex 환경 등)
+> **파이프라인을 중단하지 않는다.** 사용자에게 알리고 `specs/product-1-pager.md`에
+> 같은 구조의 마크다운 1-pager를 작성한 뒤 다음 단계로 진행한다.
+> `specs/figma-info.md`에는 "Figma 미사용"을 기록한다.
+
+## 단일 출처 원칙
+**`context/product-context.md`가 원본이다.** 1-pager는 그 표현형일 뿐이다.
+내용이 바뀌면 `product-context.md`를 먼저 고치고, 이 Playbook을 재실행해 1-pager를 다시 만든다.
+Figma에서 직접 수정하지 않는다 — 두 곳이 어긋나면 이후 모든 단계가 원본을 기준으로 동작한다.
 
 ## 절차
 
@@ -65,12 +74,20 @@ Discovery 결과를 Figma 파일에 1-pager 프레임으로 구성한다.
 ```
 
 **텍스트 스타일:**
-- 타이틀: Inter, 24px, Bold, #1A1A1A
-- 서비스 이름: Inter, 20px, Semi Bold, #1A1A1A
-- 섹션 헤더: Inter, 16px, Semi Bold, #333333
-- 본문: Inter, 14px, Regular, #555555
-- 섹션 간 간격: 24px
-- 헤더-본문 간격: 8px
+`context/design-system.md`의 Typography·Color 토큰을 우선 사용한다.
+토큰이 정의되어 있지 않을 때만 아래 기본값을 쓴다.
+
+| 요소 | 기본값 |
+|------|--------|
+| 타이틀 | 24px, Bold, 전경색 |
+| 서비스 이름 | 20px, Semi Bold, 전경색 |
+| 섹션 헤더 | 16px, Semi Bold, 전경색 (약하게) |
+| 본문 | 14px, Regular, 보조 전경색 |
+| 섹션 간 간격 | 24px (4px 스케일) |
+| 헤더–본문 간격 | 8px |
+
+> 1-pager는 와이어프레임과 같은 Figma 파일에 놓인다.
+> 서로 다른 타이포·색을 쓰면 파일 전체가 일관성을 잃는다.
 
 ### 3. fileKey 기록
 생성된 Figma 파일의 fileKey를 `specs/figma-info.md`에 기록한다.

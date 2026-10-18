@@ -24,21 +24,28 @@ Screen Spec에서 필요한 UI 요소를 추출한다:
 | 화면 요소 | DS 컴포넌트 |
 |----------|------------|
 | 페이지 헤더 | Header / Header Auth |
-| 카드 목록 | Card Grid Image / Card Grid Pricing |
-| 개별 카드 | Card / Credit card |
+| 항목 목록 (시각 위주) | Card Grid Image |
+| 항목 목록 (텍스트 위주) | Card Grid Content List |
+| 항목 나란히 비교 | Card Grid Pricing |
+| 개별 항목 요약 | Card / Product Info Card |
+| 숫자·지표 표시 | Stats Card |
 | 검색 입력 | Search |
-| 필터 그룹 | Tag Toggle Group + Select Field |
+| 필터 그룹 (다중) | Tag Toggle Group + Select Field |
 | 단일 필터 토글 | Tag Toggle / Switch Field |
 | 범위 필터 | Slider Field |
-| 카드 종류 선택 | Tab / Radio Field |
-| 혜택 태그 | Tag |
-| 상세 정보 | Accordion / Accordion Item |
+| 동급 그룹 전환 | Tab / Tabs |
+| 소수 옵션 중 택1 | Radio Field |
+| 속성 라벨 | Tag |
+| 상세 정보 접기 | Accordion / Accordion Item |
 | 모달/바텀시트 | Dialog / Dialog Body |
-| AI 입력 | Input Field + Button (AI Chat Box 참고) |
+| 대화형·AI 입력 | Input Field + Button (AI Chat Box 참고) |
 | 메인 히어로 | Hero Basic / Hero Form |
 | CTA 버튼 | Button |
 | 위험 액션 | Button Danger |
 | 페이지 하단 | Footer |
+
+> 제품 고유의 비주얼 컴포넌트는 `context/design-system.md`에서 찾는다.
+> (예: 금융 제품의 카드 비주얼 → `Credit card`)
 
 ### 3. 매핑 불가 요소 처리
 DS에 적합한 컴포넌트가 없는 경우:

@@ -27,12 +27,14 @@ selectField.addEventListener('change', () => {
 });
 ```
 
-### 2. 카드 선택 (비교용)
+### 2. 항목 선택 (여러 화면에 걸쳐 모으는 경우)
 ```javascript
-// 카드에 비교 체크박스/버튼 추가
-// 최대 3개까지 선택 가능
-// 선택 시 하단에 비교 바(floating bar) 표시
+// 각 항목에 선택 체크박스/버튼 추가
+// 최대 개수 제한 (보통 3개)
+// 1개 이상 선택되면 하단에 고정 바(floating bar) 표시
+// 상태는 playbooks/manage-state.md 의 AppState.selection 으로 관리
 ```
+> 비교·장바구니·북마크 등 "모으는" 기능이 없는 제품이면 이 단계는 생략한다.
 
 ### 3. Dialog / Bottom Sheet
 ```javascript

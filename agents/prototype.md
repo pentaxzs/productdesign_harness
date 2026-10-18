@@ -15,26 +15,37 @@ Wireframe Agent가 만든 화면을 사용자가 실제로 클릭하고 경험�
 ## 알아야 할 Context
 1. `specs/user-flow.md` — 화면 연결 순서, 분기 조건
 2. `specs/screens.md` — 각 화면의 사용자 액션, 이동 경로
-3. `context/ux-principles.md` — 최소 단계, 모든 상태 고려
-4. `prototype/` 디렉토리의 기존 HTML 파일들
+3. `specs/figma-info.md` — Figma 와이어프레임 프레임 nodeId
+4. `context/ux-principles.md` — 최소 단계, 모든 상태 고려
+5. `context/design-system.md` — DS 토큰 (styles.css 작성용)
 
 ## 사용하는 Playbooks
-1. `playbooks/connect-navigation.md` — 화면 간 네비게이션 연결
-2. `playbooks/implement-interactions.md` — 상태 변화, Dialog, Accordion 등 인터랙션
-3. `playbooks/create-mock-data.md` — 목업 데이터 생성
-4. `playbooks/manage-state.md` — 화면 간 상태 유지
+1. `playbooks/build-prototype-html.md` — **Figma 와이어프레임 → HTML 골격** (반드시 첫 번째)
+2. `playbooks/create-mock-data.md` — 목업 데이터 생성
+3. `playbooks/connect-navigation.md` — 화면 간 네비게이션 연결
+4. `playbooks/implement-interactions.md` — 상태 변화, Dialog, Accordion 등 인터랙션
+5. `playbooks/manage-state.md` — 화면 간 상태 유지
 
 ## 실행 순서
 ```
-목업 데이터 생성 → 네비게이션 연결 → 인터랙션 구현 → 상태 관리 구현
+HTML 골격 생성 → 목업 데이터 → 네비게이션 연결 → 인터랙션 구현 → 상태 관리
 ```
 
+> Wireframe Agent의 산출물은 **Figma 프레임이지 HTML이 아니다.**
+> HTML은 이 Agent가 `build-prototype-html`로 직접 만든다.
+
 ## Input
-- `prototype/` 디렉토리의 HTML/CSS 파일들 (Wireframe Agent 산출물)
+- `specs/figma-info.md`의 Figma 와이어프레임 프레임 (Wireframe Agent 산출물)
+- `specs/screens.md`, `specs/user-flow.md`
 
 ## Output
-- `prototype/` 디렉토리의 완성된 Interactive Prototype
-- `prototype/index.html`을 브라우저에서 열면 전체 Flow를 체험할 수 있는 상태
+```
+prototype/
+├── index.html      ← 모든 화면을 <section>으로 포함 (단일 페이지 + hash 라우팅)
+├── styles.css      ← DS 토큰 + 반응형
+└── app.js          ← 목업 데이터 + 상태 + 네비게이션 + 인터랙션
+```
+로컬 서버로 띄우면 전체 Flow를 체험할 수 있는 상태
 
 ## 완료 조건
 - 모든 User Flow의 Happy Path를 처음부터 끝까지 수행할 수 있다.
