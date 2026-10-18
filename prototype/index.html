@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CardFit — 나에게 맞는 카드를 찾아주는 서비스</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <a href="#/" class="header__logo">CardFit</a>
+  <nav class="header__nav">
+    <a href="#/" class="header__link" data-nav="home">홈</a>
+    <a href="#/search" class="header__link" data-nav="search" onclick="AppState.update('searchExecuted', false)">카드 검색</a>
+    <a href="#/ai" class="header__link" data-nav="ai" onclick="AppState.update('aiInput',''); AppState.update('aiResult',null)">AI 추천</a>
+    <a href="#/compare" class="header__link" data-nav="compare">카드 비교</a>
+  </nav>
+  <button class="header__menu" onclick="document.querySelector('.header__nav').classList.toggle('open')">☰</button>
+</header>
+
+<!-- ===== PAGE: HOME ===== -->
+<main id="page-home" class="page">
+  <section class="hero hero--compact">
+    <h1 class="hero__title">모든 은행·카드사의 카드를 한곳에서</h1>
+    <p class="hero__sub">전국 카드사와 은행의 신용카드·체크카드를 비교하고, 나에게 맞는 카드를 찾아보세요</p>
+  </section>
+
+  <section class="section home-panels">
+    <div class="home-panel home-panel--ai">
+      <h2 class="home-panel__title">💡 AI 맞춤 추천</h2>
+      <p class="text-secondary text-sm">이런 카드를 찾고 있나요?</p>
+      <div class="ai-quick-picks">
+        <button class="ai-quick-pick" onclick="submitAI('주말에 쇼핑을 많이 가는데 혜택 좋은 카드')">🛍 주말 쇼핑 혜택 카드</button>
+        <button class="ai-quick-pick" onclick="submitAI('온라인 쇼핑에 특화된 혜택 좋은 카드')">💻 온라인 쇼핑 특화 카드</button>
+        <button class="ai-quick-pick" onclick="submitAI('30대 초반 사회초년생에게 추천할 카드')">👤 사회초년생 추천 카드</button>
+        <button class="ai-quick-pick" onclick="submitAI('카페를 자주 가는데 할인 많은 카드')">☕ 카페 할인 카드</button>
+      </div>
+      <div class="home-panel__cta">
+        <div class="ai-divider"><span>또는 직접 입력</span></div>
+        <div class="input-with-icon" style="margin-top:var(--space-3)">
+          <span class="input-icon">🔍</span>
+          <input type="text" class="input input--icon" id="home-ai-input" placeholder="예: 월 200만원, 온라인 쇼핑 위주">
+        </div>
+        <button class="btn btn--primary btn--full" onclick="submitAI(document.getElementById('home-ai-input').value)" style="margin-top:var(--space-3)">추천받기</button>
+      </div>
+    </div>
+    <div class="home-panel home-panel--search">
+      <h2 class="home-panel__title">🔍 카드 검색</h2>
+      <div class="tabs" id="home-tabs">
+        <button class="tab active" data-type="credit" onclick="setCardType('credit')">신용카드</button>
+        <button class="tab" data-type="debit" onclick="setCardType('debit')">체크카드</button>
+      </div>
+      <p class="filter-label">혜택</p>
+      <div class="filter-tags" id="home-filters"></div>
+      <div class="filter-row">
+        <select class="select" id="issuer-select" onchange="setIssuer(this.value)">
+          <option value="">카드사·은행 전체</option>
+        </select>
+        <select class="select" id="spend-select" onchange="setMinSpend(this.value)">
+          <option value="">전월 실적 무관</option>
+          <option value="0">실적 없이 혜택 (무실적)</option>
+          <option value="300000">30만원 이하</option>
+          <option value="500000">50만원 이하</option>
+        </select>
+      </div>
+      <div class="filter-row">
+        <div class="fee-range" style="flex:1">
+          <label class="fee-range__label">연회비</label>
+          <input type="range" class="range-input" id="fee-range" min="0" max="100000" step="10000" value="100000" oninput="setFeeRange(this.value)">
+          <span class="fee-range__value" id="fee-range-value">제한 없음</span>
+        </div>
+      </div>
+      <div class="home-panel__cta">
+        <button class="btn btn--primary btn--full" onclick="executeSearchFromHome()">카드 찾기</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section__title">🔥 인기 카드</h2>
+    <div class="card-grid" id="popular-cards"></div>
+  </section>
+</main>
+
+<!-- ===== PAGE: SEARCH ===== -->
+<main id="page-search" class="page">
+  <section class="section search-filter-section">
+    <h2 class="section__title">🔍 카드 검색</h2>
+    <div class="tabs" id="search-tabs">
+      <button class="tab active" data-type="credit" onclick="setCardType('credit')">신용카드</button>
+      <button class="tab" data-type="debit" onclick="setCardType('debit')">체크카드</button>
+    </div>
+    <div class="filter-tags" id="search-benefit-tags"></div>
+    <div class="filter-row">
+      <select class="select" id="search-issuer-select" onchange="setIssuer(this.value)">
+        <option value="">카드사·은행 전체</option>
+      </select>
+      <select class="select" id="search-spend-select" onchange="setMinSpend(this.value)">
+        <option value="">전월 실적 무관</option>
+        <option value="0">실적 없이 혜택 (무실적)</option>
+        <option value="300000">30만원 이하</option>
+        <option value="500000">50만원 이하</option>
+      </select>
+    </div>
+    <div class="filter-row">
+      <div class="fee-range" style="flex:1">
+        <label class="fee-range__label">연회비</label>
+        <input type="range" class="range-input" id="search-fee-range" min="0" max="100000" step="10000" value="100000" oninput="setFeeRange(this.value)">
+        <span class="fee-range__value" id="search-fee-range-value">제한 없음</span>
+      </div>
+    </div>
+    <button class="btn btn--primary btn--full" onclick="executeSearch()">카드 찾기</button>
+    <div style="text-align:center;margin-top:var(--space-3)">
+      <a href="#/ai" class="link">AI에게 추천받기 →</a>
+    </div>
+  </section>
+
+  <section class="section" id="search-results-section" style="display:none">
+    <div class="search-header">
+      <h2 class="search-header__count" id="search-count"></h2>
+      <div class="search-header__actions">
+        <select class="select" id="sort-select" onchange="executeSearch()">
+          <option value="popular">인기순</option>
+          <option value="fee-low">연회비 낮은순</option>
+          <option value="fee-high">연회비 높은순</option>
+        </select>
+        <button class="btn btn--sm btn--secondary" onclick="resetSearchAndHideResults()">다시 찾기</button>
+      </div>
+    </div>
+    <div class="filter-tags filter-tags--active" id="search-filters"></div>
+    <div id="search-results" data-state="default">
+      <div class="state-default">
+        <div class="card-grid" id="search-grid"></div>
+      </div>
+      <div class="state-empty">
+        <div class="empty-state">
+          <p class="empty-state__text">조건에 맞는 카드가 없어요</p>
+          <p class="empty-state__sub">조건을 완화해보세요</p>
+          <button class="btn btn--secondary" onclick="resetSearchAndHideResults()">필터 초기화</button>
+        </div>
+      </div>
+      <div class="state-loading">
+        <div class="skeleton-grid">
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+        </div>
+      </div>
+      <div class="state-error">
+        <div class="empty-state">
+          <p class="empty-state__text">검색 중 오류가 발생했어요</p>
+          <button class="btn btn--secondary" onclick="executeSearch()">다시 시도</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===== PAGE: AI RECOMMEND ===== -->
+<main id="page-ai" class="page">
+  <div id="ai-container" data-state="input">
+    <div class="state-input">
+      <section class="section" style="max-width:600px;margin:0 auto;padding-top:var(--space-16)">
+        <h2 class="section__title">AI 맞춤 추천</h2>
+        <p class="text-secondary" style="margin-bottom:var(--space-6)">소비 패턴을 알려주시면 딱 맞는 카드를 찾아드려요</p>
+        <div class="input-with-icon" style="margin-bottom:var(--space-4)">
+          <span class="input-icon">🔍</span>
+          <input type="text" class="input input--icon" id="ai-page-input" placeholder="예: 월 200만원, 온라인 쇼핑 위주">
+        </div>
+        <button class="btn btn--primary btn--full" onclick="submitAI(document.getElementById('ai-page-input').value)">추천받기</button>
+        <div style="text-align:center;margin-top:var(--space-4)">
+          <a href="#/search" class="link">직접 검색하기 →</a>
+        </div>
+      </section>
+    </div>
+    <div class="state-loading">
+      <div class="ai-loading">
+        <div class="ai-loading__spinner"></div>
+        <p>맞춤 카드를 찾고 있어요...</p>
+      </div>
+    </div>
+    <div class="state-default">
+      <section class="ai-summary" id="ai-summary">
+        <div class="ai-summary__left">
+          <h2>AI 분석 결과</h2>
+          <p class="text-secondary" id="ai-user-input"></p>
+        </div>
+        <p class="ai-summary__right link" id="ai-result-text"></p>
+      </section>
+      <section class="section">
+        <div class="card-grid card-grid--3" id="ai-grid"></div>
+      </section>
+      <section class="section ai-retry-section">
+        <h3 class="ai-retry__title">다른 카드도 찾아볼까요?</h3>
+        <div class="ai-quick-picks ai-quick-picks--row">
+          <button class="ai-quick-pick" onclick="retryAI('주말에 쇼핑을 많이 가는데 혜택 좋은 카드')">🛍 주말 쇼핑</button>
+          <button class="ai-quick-pick" onclick="retryAI('온라인 쇼핑에 특화된 혜택 좋은 카드')">💻 온라인 쇼핑</button>
+          <button class="ai-quick-pick" onclick="retryAI('30대 초반 사회초년생에게 추천할 카드')">👤 사회초년생</button>
+          <button class="ai-quick-pick" onclick="retryAI('카페를 자주 가는데 할인 많은 카드')">☕ 카페 할인</button>
+        </div>
+        <div class="ai-retry__input">
+          <div class="input-with-icon">
+            <span class="input-icon">🔍</span>
+            <input type="text" class="input input--icon" id="ai-retry-input" placeholder="다른 조건으로 다시 추천받기">
+          </div>
+          <button class="btn btn--primary" onclick="retryAI(document.getElementById('ai-retry-input').value)">추천받기</button>
+        </div>
+        <div style="text-align:center;margin-top:var(--space-3)">
+          <a href="#/search" class="link">직접 검색하기 →</a>
+        </div>
+      </section>
+    </div>
+    <div class="state-error">
+      <div class="empty-state">
+        <p class="empty-state__text">추천을 생성하지 못했어요</p>
+        <button class="btn btn--secondary" onclick="navigateTo('#/')">다시 시도</button>
+        <a href="#/search" class="link">직접 검색하기 →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ===== PAGE: COMPARE ===== -->
+<main id="page-compare" class="page">
+  <section class="section">
+    <h2 class="section__title">카드 비교</h2>
+    <div id="compare-container" data-state="default">
+      <div class="state-default">
+        <div class="compare-table" id="compare-table"></div>
+      </div>
+      <div class="state-empty">
+        <div class="empty-state">
+          <p class="empty-state__text">비교할 카드를 선택해주세요</p>
+          <p class="empty-state__sub">검색 또는 AI 추천에서 카드를 선택할 수 있어요</p>
+          <button class="btn btn--primary" onclick="navigateTo('#/search')">카드 검색하기</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===== PAGE: DETAIL ===== -->
+<main id="page-detail" class="page">
+  <section class="detail" id="detail-content"></section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer" id="app-footer">
+  <div class="footer__links">
+    <a href="#">이용약관</a>
+    <a href="#">개인정보처리방침</a>
+    <a href="#">고객센터</a>
+  </div>
+  <p>&copy; 2026 CardFit. 모든 카드 정보는 각 카드사 공식 정보를 기반으로 합니다.</p>
+</footer>
+
+<!-- ===== COMPARE BAR (floating) ===== -->
+<div class="compare-bar" id="compare-bar">
+  <span class="compare-bar__count" id="compare-bar-count">0개 선택됨</span>
+  <button class="btn btn--primary btn--sm" onclick="navigateTo('#/compare')">비교하기</button>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
