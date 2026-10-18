@@ -13,11 +13,13 @@
    - `playbooks/create-figma-onepager.md` — Figma 파일을 만들고, Discovery 결과를 1-pager 프레임으로 구성한다.
    - 파일 정보를 `specs/figma-info.md`에 기록한다.
    - 이후 Phase 2에서 Wireframe Agent가 같은 Figma 파일의 1-pager 우측에 와이어프레임을 배치한다.
+   - **Figma를 사용할 수 없으면 중단하지 않는다.** `specs/product-1-pager.md`에 마크다운으로 작성하고 진행한다.
 5. Playbook을 순서대로 실행한다:
    - `playbooks/analyze-requirements.md`
    - `playbooks/create-user-flow.md`
    - `playbooks/create-screen-spec.md`
-6. Output: `context/product-context.md` (업데이트), Figma 1-pager, `specs/figma-info.md`, `specs/user-flow.md`, `specs/screens.md`
+   - `playbooks/create-checklist.md` — **Critic이 채점할 기준을 미리 확정한다**
+6. Output: `context/product-context.md` (업데이트), Figma 1-pager, `specs/figma-info.md`, `specs/user-flow.md`, `specs/screens.md`, `evaluation/checklist.md` (Part A)
 7. **체크포인트**: Figma 1-pager 링크 + User Flow와 Screen 목록을 사용자에게 보여주고 확인을 받는다. 사용자가 수정을 요청하면 반영한다.
 
 ### Phase 2: Wireframe (Wireframe Agent)

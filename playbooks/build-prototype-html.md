@@ -12,6 +12,7 @@ Prototype Agent가 인터랙션을 붙이기 전에 반드시 실행하는 첫 �
 
 ## 전제
 - `specs/screens.md`에 화면 목록과 Spec이 있다.
+- `specs/layouts.md`에 화면별 레이아웃 구조도가 있다.
 - `specs/figma-info.md`에 Figma fileKey와 프레임 nodeId가 기록되어 있다.
 
 ---
@@ -34,6 +35,10 @@ prototype/
 ---
 
 ## 절차
+
+### 0. 레이아웃 구조도 확인
+`specs/layouts.md`를 읽는다. 화면별 Mobile/PC 구조와 섹션 배치가 여기에 있다.
+Figma 프레임은 이 구조도를 시각화한 것이므로, 둘이 어긋나면 `specs/layouts.md`를 기준으로 한다.
 
 ### 1. Figma 와이어프레임 읽기
 `specs/figma-info.md`의 nodeId로 각 화면 프레임의 구조를 확인한다.

@@ -81,7 +81,7 @@ Skill (트리거 명령)  →  Agent (주체)  →  Playbook (절차)
 
 | Agent | 파일 | 역할 | Playbooks |
 |-------|------|------|-----------|
-| Planner | `agents/planner.md` | PM — 문제 구조화 | discover-context, create-figma-onepager, analyze-requirements, create-user-flow, create-screen-spec |
+| Planner | `agents/planner.md` | PM — 문제 구조화 | discover-context, create-figma-onepager, analyze-requirements, create-user-flow, create-screen-spec, **create-checklist** |
 | Wireframe | `agents/wireframe.md` | UX Designer — 화면 구조 설계 (Figma) | map-components, design-layout, build-wireframe-figma, implement-responsive-figma |
 | Prototype | `agents/prototype.md` | Interaction Designer — 경험 연결 | **build-prototype-html**, create-mock-data, connect-navigation, implement-interactions, manage-state |
 | Critic | `agents/critic.md` | Design Reviewer — 결과 검증 | **check-prototype-runs**, check-requirements, check-ux-principles, check-design-system, write-critique-report |
@@ -91,9 +91,10 @@ Skill (트리거 명령)  →  Agent (주체)  →  Playbook (절차)
 ## Pipeline (/wire)
 
 ```
-Phase 1: Plan     (Planner Agent)     → context/ + specs/ + Figma 1-Pager
+Phase 1: Plan     (Planner Agent)     → context/ + specs/ + Figma 1-Pager + checklist Part A
   ↓ Discovery: 부족한 맥락은 질문으로 확보
-  ↓ Figma 1-Pager 생성 (와이어프레임 좌측 배치)
+  ↓ Figma 1-Pager 생성 (Figma 불가 시 specs/product-1-pager.md 로 폴백)
+  ↓ Critic이 채점할 기준(checklist Part A)을 여기서 확정
   ↓ 사용자 확인 (체크포인트)
 Phase 2: Wireframe (Wireframe Agent)  → Figma 와이어프레임 (Mobile + Desktop)
   ↓ Figma 사용 불가 시 HTML 경로로 폴백 (파이프라인 중단하지 않음)
@@ -138,6 +139,7 @@ productdesign_harness/
 │   ├── analyze-requirements.md
 │   ├── create-user-flow.md
 │   ├── create-screen-spec.md
+│   ├── create-checklist.md          ← 검증 체크리스트 Part A 생성
 │   ├── map-components.md
 │   ├── design-layout.md
 │   ├── build-wireframe-figma.md

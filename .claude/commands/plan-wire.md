@@ -14,12 +14,14 @@ Planner Agent를 실행한다.
    - `playbooks/analyze-requirements.md` — 요구사항 분석
    - `playbooks/create-user-flow.md` — User Flow 작성
    - `playbooks/create-screen-spec.md` — Screen Spec 작성
+   - `playbooks/create-checklist.md` — 검증 체크리스트 Part A 생성
 5. 산출물을 저장한다:
    - `context/product-context.md` (Discovery 업데이트)
    - `specs/user-flow.md`
    - `specs/screens.md`
-5. Agent의 완료 조건을 확인한다.
-6. User Flow와 Screen 목록을 사용자에게 보여주고 확인을 받는다.
+   - `evaluation/checklist.md` (Part A)
+6. Agent의 완료 조건을 확인한다.
+7. User Flow와 Screen 목록을 사용자에게 보여주고 확인을 받는다.
 
 ## Input
 사용자의 요청: $ARGUMENTS

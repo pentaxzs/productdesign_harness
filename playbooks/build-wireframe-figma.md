@@ -9,6 +9,7 @@
 ## 전제 조건
 - `specs/figma-info.md`에 Figma fileKey가 기록되어 있어야 한다.
 - `playbooks/map-components.md`와 `playbooks/design-layout.md`가 완료되어야 한다.
+- `specs/layouts.md`에 화면별 레이아웃 구조도가 작성되어 있어야 한다.
 - Figma MCP `figma-use` 스킬을 로드한 상태여야 한다.
 
 ## Figma 파일 구조

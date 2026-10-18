@@ -93,7 +93,7 @@ workspace/
 ## 파이프라인
 
 ```
-Phase 1: Plan        — 질문으로 맥락 확보 → 1-Pager → 요구사항 → User Flow → Screen Spec
+Phase 1: Plan        — 질문으로 맥락 확보 → 1-Pager → 요구사항 → User Flow → Screen Spec → 검증 체크리스트
 Phase 2: Wireframe   — Figma에 Mobile(375px) + Desktop(1440px) 와이어프레임 생성
 Phase 3: Prototype   — Figma → HTML 골격 변환 → 데이터·네비게이션·인터랙션·상태
 Phase 4: Critique    — 브라우저 실행 검증 → 요구사항·UX원칙·디자인시스템 검증
@@ -101,7 +101,7 @@ Phase 5: Refine      — Critique에서 Revise 판정 시 수정 (최대 3회)
 Phase 6: Human Review — 최종 확인
 ```
 
-**Figma MCP가 없어도 동작합니다.** Phase 2에서 HTML 와이어프레임 경로로 자동 전환되며, 파이프라인은 중단되지 않습니다. Codex 환경이 이 경로를 사용합니다.
+**Figma MCP가 없어도 동작합니다.** Phase 1의 1-Pager는 마크다운으로, Phase 2의 와이어프레임은 HTML 경로로 자동 전환되며, 파이프라인은 중단되지 않습니다. Codex 환경이 이 경로를 사용합니다.
 
 ### 프로토타입 실행
 
@@ -132,7 +132,7 @@ productdesign_harness/
 ├── playbooks/                   ← Playbook (실행 절차)
 │   ├── discover-context.md      ←   Discovery (질문)
 │   ├── create-figma-onepager.md ←   Figma 1-Pager 생성
-│   └── ...                      ←   총 21개
+│   └── ...                      ←   총 22개
 ├── context/                     ← Context (배경 지식)
 │   ├── product-context.md       ←   제품 배경 (빈 템플릿 — Discovery가 채움)
 │   ├── ux-principles.md         ←   UX 원칙 (수정해서 사용)
@@ -165,7 +165,7 @@ productdesign_harness/
 | `context/ux-principles.md` | 팀의 원칙이 따로 있을 때 | 범용 7원칙이 적용됩니다 |
 | `context/product-context.md` | 미리 채워두고 싶을 때 | Discovery 단계에서 AI가 질문해서 채웁니다 |
 | `evaluation/checklist.md` | Part B(공통 기준)를 바꾸고 싶을 때 | Part A(제품별)는 Planner가 자동 생성합니다 |
-| `playbooks/` | 절차를 추가·변경할 때 | 기본 21개 Playbook이 실행됩니다 |
+| `playbooks/` | 절차를 추가·변경할 때 | 기본 22개 Playbook이 실행됩니다 |
 
 **Playbook 추가**: `playbooks/`에 새 .md 파일을 만들고 Agent(`agents/*.md`)나 Skill(`.claude/commands/*.md`)의 실행 순서에 추가합니다.
 

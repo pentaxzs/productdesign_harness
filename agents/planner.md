@@ -28,11 +28,15 @@
 3. `playbooks/analyze-requirements.md` — 요구사항에서 Goal, 정보, 분기를 추출
 4. `playbooks/create-user-flow.md` — 시나리오를 User Flow로 변환
 5. `playbooks/create-screen-spec.md` — Flow에서 Screen 도출 + Spec 작성
+6. `playbooks/create-checklist.md` — 검증 체크리스트 Part A 생성
 
 ## 실행 순서
 ```
-Discovery (맥락 확보) → Figma 1-Pager 생성 → 요구사항 분석 → User Flow 작성 → Screen 목록 도출 → Screen Spec 작성
+Discovery → Figma 1-Pager → 요구사항 분석 → User Flow → Screen Spec → 검증 체크리스트
 ```
+
+> 마지막 단계에서 **Critic이 채점할 기준을 미리 확정한다.**
+> 기획과 검증 기준이 같은 단계에서 나와야 둘이 어긋나지 않는다.
 
 ### Discovery 단계 상세
 1. `context/product-context.md`를 읽는다.
@@ -48,13 +52,16 @@ Discovery (맥락 확보) → Figma 1-Pager 생성 → 요구사항 분석 → U
 
 ## Output
 - `context/product-context.md` (Discovery로 업데이트)
-- Figma 1-pager 프레임 (Figma 파일 내)
+- Figma 1-pager 프레임 (Figma 파일 내) 또는 `specs/product-1-pager.md` (Figma 미사용 시)
 - `specs/figma-info.md` (fileKey, 1-pager nodeId 기록)
 - `specs/user-flow.md`
+- `specs/layouts.md` (Wireframe Agent가 작성하지만 Planner 단계에서 화면이 확정됨)
 - `specs/screens.md`
+- `evaluation/checklist.md` (Part A 채움)
 
 ## 완료 조건
 - **Product Context의 필수 항목이 모두 채워져 있다.**
+- `evaluation/checklist.md`의 Part A가 채워져 있다 (플레이스홀더가 남아 있지 않다).
 - Product Context의 Key Scenarios가 모두 Flow로 커버된다.
 - 모든 Flow의 시작점에 도달할 수 있는 경로가 있다.
 - 각 Screen에 명확한 목적과 Primary CTA가 있다.
