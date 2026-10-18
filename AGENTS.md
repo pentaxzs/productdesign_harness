@@ -61,6 +61,12 @@ Production 개발이 아니라, "이 경험으로 개발 논의를 시작할 수
 >
 > 브라우저 실행 검증(`check-prototype-runs`)을 수행할 수 없으면
 > 리포트에 "실행 검증 미수행"을 명시하고, `Pass` 판정에 단서를 붙인다.
+>
+> 각 Phase를 마칠 때 `playbooks/report-checkpoint.md`로 산출물 요약과 선택지를 보여준다.
+> 요청에 `--confirm`이 있으면 각 체크포인트에서 멈추고, 없으면 보여주기만 하고 진행한다.
+>
+> 프로토타입은 상태 제어 쿼리(`?reset=1` `?seed=0` `?state=loading` `?state=error`)를
+> 반드시 구현한다. 없으면 Empty/Loading/Error를 검증할 수 없다.
 | Prototype | `agents/prototype.md` | Interaction Designer — 경험 연결 | create-mock-data, connect-navigation, implement-interactions, manage-state |
 | Critic | `agents/critic.md` | Design Reviewer — 결과 검증 | check-requirements, check-ux-principles, check-design-system, write-critique-report |
 

@@ -26,10 +26,11 @@
 3. `playbooks/check-ux-principles.md` — UX 원칙 위반 점검
 4. `playbooks/check-design-system.md` — DS 준수 여부 점검
 5. `playbooks/write-critique-report.md` — 구조화된 피드백 리포트 작성
+6. `playbooks/report-checkpoint.md` — 체크포인트 보고 (마지막, 판정 포함)
 
 ## 실행 순서
 ```
-실행 검증 → 요구사항 점검 → UX 원칙 점검 → DS 준수 점검 → 리포트 작성 → 판정
+실행 검증 → 요구사항 점검 → UX 원칙 점검 → DS 준수 점검 → 리포트 작성 → 판정 → 체크포인트 보고
 ```
 
 > **코드를 읽기 전에 먼저 띄워본다.**

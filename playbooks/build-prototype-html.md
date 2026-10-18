@@ -91,6 +91,53 @@ UX 원칙 6에 따라 화면마다 필요한 상태를 **미리 마크업해두�
 Empty와 Error에는 **다음 행동을 안내하는 CTA**를 반드시 넣는다.
 `specs/screens.md`에서 해당 화면에 N/A인 상태는 생략하되, 왜 N/A인지 주석으로 남긴다.
 
+### 3-1. 상태 제어 쿼리 구현 (필수)
+
+Empty·Loading·Error를 마크업만 해두면 **아무도 그 상태를 볼 수 없다.**
+목업에는 실제 네트워크 실패나 지연이 없어서 자연스럽게 도달하는 경로가 없기 때문이다.
+Critic은 "마크업만 존재"로 기록할 수밖에 없고, 그 상태는 사실상 검증되지 않는다.
+
+그래서 프로토타입은 **URL 쿼리로 상태를 강제할 수 있어야 한다.** 이것은 선택이 아니라 규약이다.
+
+| 쿼리 | 동작 |
+|------|------|
+| `?reset=1` | 저장된 상태를 비우고 기본 시드를 다시 적용한다 |
+| `?seed=0` | 시드 없이 시작한다 (데이터가 전혀 없는 신규 사용자) |
+| `?state=loading` | 해당하는 화면들을 Loading State로 표시한다 |
+| `?state=error` | 해당하는 화면들을 Error State로 표시한다 |
+
+```javascript
+// app.js — init()
+const p = new URLSearchParams(location.search);
+
+if(p.get('state')) AppState.simulate = p.get('state');   // 'loading' | 'error'
+
+if(p.get('reset') === '1'){
+  try{ sessionStorage.removeItem('<storage-key>'); }catch(e){}
+  Object.assign(AppState, INITIAL_STATE);
+}
+
+const seeded = (()=>{ try{ return !!sessionStorage.getItem('<storage-key>'); }catch(e){ return false; } })();
+if(p.get('seed') === '0'){ /* 빈 상태 유지 */ }
+else if(!seeded || p.get('reset') === '1'){ applyDemoSeed(); }
+```
+
+그리고 렌더 단계에서 `simulate`를 먼저 적용한다:
+
+```javascript
+function render(screenId){
+  if(AppState.simulate && SCREENS_WITH_ASYNC.includes(screenId)){
+    showState(screenId, AppState.simulate);   // loading | error
+    return;
+  }
+  // ... 평소 렌더
+}
+```
+
+**`?reset=1`이 없으면 상태가 되돌아가지 않는다.** `?seed=0`으로 한 번 진입하면
+`sessionStorage`에 빈 상태가 저장되어, 이후 기본 URL로 와도 계속 Empty로 남는다.
+데모·리뷰 중에 "처음 상태"와 "진행 중 상태"를 오갈 수 없게 된다.
+
 ### 4. DS 토큰으로 styles.css 작성
 `context/design-system.md`의 Design Tokens를 CSS Variables로 선언하고, **하드코딩된 값을 쓰지 않는다.**
 
@@ -140,6 +187,8 @@ Mobile First. 기본 스타일이 375px 기준이고, `min-width` 미디어 쿼�
 - 각 section의 `id`가 라우트와 일치하는가?
 - 화면마다 필요한 상태(Empty/Error/Loading)가 마크업되어 있는가?
 - Empty/Error에 다음 행동을 안내하는 CTA가 있는가?
+- **`?reset=1` / `?seed=0` / `?state=loading` / `?state=error`가 모두 동작하는가?**
+  (하나라도 빠지면 Critic이 그 상태를 검증할 수 없다)
 - CSS에 하드코딩된 색상·간격 값이 없는가?
 - 375px에서 가로 스크롤이 없는가?
 - 화면당 Primary CTA가 하나만 렌더링되는가? (Mobile/Desktop 중복 주의)

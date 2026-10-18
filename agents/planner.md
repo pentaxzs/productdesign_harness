@@ -29,10 +29,11 @@
 4. `playbooks/create-user-flow.md` — 시나리오를 User Flow로 변환
 5. `playbooks/create-screen-spec.md` — Flow에서 Screen 도출 + Spec 작성
 6. `playbooks/create-checklist.md` — 검증 체크리스트 Part A 생성
+7. `playbooks/report-checkpoint.md` — 체크포인트 보고 (마지막)
 
 ## 실행 순서
 ```
-Discovery → Figma 1-Pager → 요구사항 분석 → User Flow → Screen Spec → 검증 체크리스트
+Discovery → Figma 1-Pager → 요구사항 분석 → User Flow → Screen Spec → 검증 체크리스트 → 체크포인트 보고
 ```
 
 > 마지막 단계에서 **Critic이 채점할 기준을 미리 확정한다.**

@@ -25,6 +25,10 @@ Production 개발이 아니라, "이 경험으로 개발 논의를 시작할 수
 - PC 확장 (기준 너비: 1440px).
 - 터치 타겟 최소 44px.
 
+### 진행 보고
+- 각 Phase가 끝나면 `playbooks/report-checkpoint.md`로 산출물 요약과 선택지를 보여준다.
+- `--confirm`이 입력에 있으면 각 체크포인트에서 멈추고, 없으면 보여주기만 하고 진행한다.
+
 ### Prototype 범위
 - HTML/CSS/JS로 Interactive Prototype을 만든다.
 - 실제 API 호출 없이 목업 데이터로 동작한다.
@@ -42,8 +46,14 @@ prototype/
 **실행은 반드시 로컬 서버로 한다** — `cd prototype && python3 -m http.server 8000`
 `file://`로 열면 `sessionStorage` 기반 상태 유지가 동작하지 않는다.
 
+**상태 제어 쿼리를 반드시 구현한다** — `?reset=1` `?seed=0` `?state=loading` `?state=error`
+목업에는 실제 네트워크 실패가 없어서, 이 쿼리가 없으면 Empty/Loading/Error를 검증할 수 없다.
+상세는 `playbooks/build-prototype-html.md`.
+
 ### 검증
 - Critic은 코드를 읽기 전에 **프로토타입을 브라우저에서 띄워본다.**
+- 버그를 보고하기 전에 **검증 도구의 오탐을 먼저 배제한다** (`playbooks/check-prototype-runs.md`).
+  숨긴 요소까지 읽는 텍스트 추출, 다중 매칭된 클릭 선택자가 앱 버그처럼 보인다.
 - 실행 검증을 못 한 경우 `Pass`를 단정하지 않고 "Pass (실행 미검증)"으로 표기한다.
 
 ---
@@ -85,6 +95,8 @@ Skill (트리거 명령)  →  Agent (주체)  →  Playbook (절차)
 | Wireframe | `agents/wireframe.md` | UX Designer — 화면 구조 설계 (Figma) | map-components, design-layout, build-wireframe-figma, implement-responsive-figma |
 | Prototype | `agents/prototype.md` | Interaction Designer — 경험 연결 | **build-prototype-html**, create-mock-data, connect-navigation, implement-interactions, manage-state |
 | Critic | `agents/critic.md` | Design Reviewer — 결과 검증 | **check-prototype-runs**, check-requirements, check-ux-principles, check-design-system, write-critique-report |
+
+모든 Agent는 작업을 마칠 때 `playbooks/report-checkpoint.md`로 산출물을 보고한다.
 
 ---
 
@@ -152,6 +164,7 @@ productdesign_harness/
 │   ├── implement-interactions.md
 │   ├── manage-state.md
 │   ├── check-prototype-runs.md       ← 브라우저 실행 검증
+│   ├── report-checkpoint.md          ← Phase별 체크포인트 보고
 │   ├── check-requirements.md
 │   ├── check-ux-principles.md
 │   ├── check-design-system.md

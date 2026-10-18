@@ -25,10 +25,11 @@ Wireframe Agent가 만든 화면을 사용자가 실제로 클릭하고 경험�
 3. `playbooks/connect-navigation.md` — 화면 간 네비게이션 연결
 4. `playbooks/implement-interactions.md` — 상태 변화, Dialog, Accordion 등 인터랙션
 5. `playbooks/manage-state.md` — 화면 간 상태 유지
+6. `playbooks/report-checkpoint.md` — 체크포인트 보고 (마지막)
 
 ## 실행 순서
 ```
-HTML 골격 생성 → 목업 데이터 → 네비게이션 연결 → 인터랙션 구현 → 상태 관리
+HTML 골격 생성 → 목업 데이터 → 네비게이션 연결 → 인터랙션 구현 → 상태 관리 → 체크포인트 보고
 ```
 
 > Wireframe Agent의 산출물은 **Figma 프레임이지 HTML이 아니다.**
