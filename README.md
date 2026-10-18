@@ -158,7 +158,26 @@ productdesign_harness/
 
 **Playbook 추가**: `playbooks/`에 새 .md 파일을 만들고 Agent(`agents/*.md`)나 Skill(`.claude/commands/*.md`)의 실행 순서에 추가합니다.
 
-**업스트림 갱신**: 하네스가 업데이트되면 `agents/`와 `playbooks/`만 다시 받으면 됩니다. `context/`와 산출물 디렉토리는 제품별 내용이므로 덮어쓰지 마세요.
+## 하네스 업데이트 받기
+
+제품 폴더는 클론 시점의 하네스를 그대로 들고 갑니다. 이후 하네스가 개선되면 `upstream` 리모트로 가져옵니다.
+
+```bash
+cd my-product
+git remote add upstream https://github.com/pentaxzs/productdesign_harness.git
+git pull upstream main
+```
+
+`agents/`와 `playbooks/`를 수정하지 않았다면 그대로 머지됩니다.
+`context/`, `specs/`, `prototype/`, `evaluation/`은 제품별 내용이므로 충돌이 날 수 있습니다. 이때는 자기 것을 유지하세요:
+
+```bash
+git checkout --ours context/ specs/ prototype/ evaluation/
+git add . && git commit
+```
+
+> 이미 완성된 프로토타입은 굳이 갱신하지 않아도 됩니다.
+> 새 제품은 클론하는 시점에 이미 최신 하네스입니다.
 
 ## 포함된 예시
 
