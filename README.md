@@ -114,13 +114,38 @@ workspace/
 
 ## 명령어 (Claude Code)
 
-| 명령 | 설명 |
-|------|------|
-| `/wire` | 전체 파이프라인 실행 (Plan → Wireframe → Prototype → Critique → Refine) |
-| `/plan-wire` | Plan 단계만 실행 |
-| `/wireframe` | Wireframe 단계만 실행 |
-| `/proto` | Prototype 단계만 실행 |
-| `/critique` | Critique 단계만 실행 |
+보통은 `/wire` 하나만 씁니다. 나머지는 특정 단계만 다시 돌릴 때 쓰는 것입니다.
+
+```bash
+/wire 좋아하는 애니 대사로 일본어 배우는 앱
+```
+
+입력은 **만들고 싶은 서비스를 한 줄로** 적으면 됩니다. 정교할 필요 없습니다 —
+부족한 맥락은 AI가 Discovery 단계에서 질문으로 채웁니다.
+아무것도 안 적으면 `context/product-context.md`의 Key Scenarios를 기준으로 진행하고,
+그 파일도 비어 있으면 질문부터 시작합니다.
+
+| 명령 | 하는 일 | 선행 조건 | 산출물 |
+|------|---------|----------|--------|
+| `/wire` | 전체 파이프라인 (Plan → Wireframe → Prototype → Critique → Refine) | 없음 | 아래 전부 |
+| `/plan-wire` | 질문으로 맥락 확보 → User Flow + Screen Spec + 검증 체크리스트 | 없음 | `context/product-context.md`, `specs/user-flow.md`, `specs/screens.md`, `evaluation/checklist.md` |
+| `/wireframe` | Screen Spec → 화면별 와이어프레임 (Mobile + Desktop) | `specs/screens.md` | Figma 프레임 또는 `prototype/` HTML, `specs/layouts.md` |
+| `/proto` | 와이어프레임 → 동작하는 Interactive Prototype | `specs/screens.md` + 와이어프레임 | `prototype/index.html`, `styles.css`, `app.js` |
+| `/critique` | 브라우저로 띄워 검증 → 피드백 리포트 | `prototype/index.html` | `evaluation/critique-report.md` |
+
+선행 조건이 없으면 무엇을 먼저 실행해야 하는지 안내합니다.
+모든 명령에 `--auto` 를 붙일 수 있습니다 ([진행 방식](#진행-방식--단계마다-멈춥니다)).
+
+### 특정 단계만 다시 돌리기
+
+```bash
+/plan-wire 화면을 5개로 줄이고 비교 기능 빼줘   # 기획부터 다시
+/proto                                          # 프로토타입만 다시
+/critique                                       # 검증만 다시
+```
+
+이전 단계 산출물은 그대로 두고 해당 단계만 다시 실행합니다.
+`/wire` 로 한 바퀴 돈 뒤 특정 부분만 손볼 때 씁니다.
 
 ### 진행 방식 — 단계마다 멈춥니다
 
