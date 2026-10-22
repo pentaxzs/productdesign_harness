@@ -9,7 +9,10 @@ Wireframe Agent를 실행한다.
    - `context/design-system.md`
    - `context/ux-principles.md`
    - `specs/screens.md`
-3. Figma MCP `figma-use` 스킬을 로드한다 (MCP resource: `skill://figma/figma-use/SKILL.md`).
+3. `specs/figma-info.md`를 확인한다.
+   - "Figma 미사용"이 기록되어 있으면 아래 HTML 경로로 바로 간다. 묻지 않는다.
+   - 기록이 없으면 `playbooks/check-figma-access.md`로 확인하고, 안 되면 사용자에게 묻는다.
+   - Figma 사용이면 `figma-use` 스킬을 로드한다 (MCP resource: `skill://figma/figma-use/SKILL.md`).
 4. Agent의 Playbook을 순서대로 실행한다:
    - `playbooks/map-components.md` — 컴포넌트 매핑
    - `playbooks/design-layout.md` — 레이아웃 설계
@@ -20,9 +23,9 @@ Wireframe Agent를 실행한다.
 7. `playbooks/report-checkpoint.md`를 실행해 체크포인트를 보고한다.
    산출물 요약을 보여주고 **멈춰서** 다음 동작을 묻는다 (`--auto`가 있으면 묻지 않는다).
 
-## Figma를 사용할 수 없는 경우
-MCP가 연결되지 않았거나 사용자가 Figma를 원하지 않으면 **HTML 경로로 전환한다.**
-사용자에게 전환 사실을 알리고 아래 Playbook으로 대체한다:
+## Figma 미사용 경로
+`specs/figma-info.md`에 "Figma 미사용"이 기록되어 있거나, `check-figma-access.md`에서
+사용자가 폴백을 선택한 경우 아래 Playbook으로 대체한다:
    - `playbooks/build-wireframe-html.md` — HTML 와이어프레임 작성
    - `playbooks/implement-responsive.md` — 반응형 구현
 

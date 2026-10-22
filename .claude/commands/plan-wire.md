@@ -11,6 +11,8 @@ Planner Agent를 실행한다.
    - 빠진 항목이 있으면 사용자에게 질문하고, 답변을 받아 `context/product-context.md`를 업데이트한다.
    - **Discovery가 완료되어야 다음 단계로 진행한다.**
 4. Agent의 Playbook을 순서대로 실행한다:
+   - `playbooks/check-figma-access.md` — Figma 사용 가능 여부 확인 (안 되면 멈추고 질문)
+   - `playbooks/create-figma-onepager.md` — 1-Pager 생성 (Figma 또는 마크다운 폴백)
    - `playbooks/analyze-requirements.md` — 요구사항 분석
    - `playbooks/create-user-flow.md` — User Flow 작성
    - `playbooks/create-screen-spec.md` — Screen Spec 작성

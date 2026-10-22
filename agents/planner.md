@@ -24,16 +24,17 @@
 
 ## 사용하는 Playbooks
 1. `playbooks/discover-context.md` — 1-pager 수준의 맥락 확보 (질문 → 확인)
-2. `playbooks/create-figma-onepager.md` — Discovery 결과를 Figma 1-pager 프레임으로 생성
-3. `playbooks/analyze-requirements.md` — 요구사항에서 Goal, 정보, 분기를 추출
-4. `playbooks/create-user-flow.md` — 시나리오를 User Flow로 변환
-5. `playbooks/create-screen-spec.md` — Flow에서 Screen 도출 + Spec 작성
-6. `playbooks/create-checklist.md` — 검증 체크리스트 Part A 생성
-7. `playbooks/report-checkpoint.md` — 체크포인트 보고 (마지막)
+2. `playbooks/check-figma-access.md` — Figma 사용 가능 여부 확인 (안 되면 멈추고 질문)
+3. `playbooks/create-figma-onepager.md` — Discovery 결과를 1-pager로 생성 (Figma 또는 마크다운)
+4. `playbooks/analyze-requirements.md` — 요구사항에서 Goal, 정보, 분기를 추출
+5. `playbooks/create-user-flow.md` — 시나리오를 User Flow로 변환
+6. `playbooks/create-screen-spec.md` — Flow에서 Screen 도출 + Spec 작성
+7. `playbooks/create-checklist.md` — 검증 체크리스트 Part A 생성
+8. `playbooks/report-checkpoint.md` — 체크포인트 보고 (마지막)
 
 ## 실행 순서
 ```
-Discovery → Figma 1-Pager → 요구사항 분석 → User Flow → Screen Spec → 검증 체크리스트 → 체크포인트 보고
+Discovery → Figma 가용성 확인 → 1-Pager → 요구사항 분석 → User Flow → Screen Spec → 검증 체크리스트 → 체크포인트 보고
 ```
 
 > 마지막 단계에서 **Critic이 채점할 기준을 미리 확정한다.**
@@ -44,7 +45,7 @@ Discovery → Figma 1-Pager → 요구사항 분석 → User Flow → Screen Spe
 2. 1-pager 필수 항목(서비스 배경, 타겟 유저, 핵심 가치, 비즈니스 목표, 핵심 시나리오, 제약 조건)을 점검한다.
 3. 빠진 항목이 있으면 사용자에게 질문한다. **한 번에 모든 질문을 던진다.**
 4. 답변을 받으면 `context/product-context.md`를 업데이트한다.
-5. 모든 필수 항목이 채워지면 Figma 1-pager를 생성한다.
+5. 모든 필수 항목이 채워지면 Figma 가용성을 확인하고(`check-figma-access.md`), 1-pager를 생성한다.
 6. Figma 파일 정보를 `specs/figma-info.md`에 기록한다.
 
 ## Input

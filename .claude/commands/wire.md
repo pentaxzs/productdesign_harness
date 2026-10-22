@@ -27,24 +27,29 @@
    - `playbooks/discover-context.md` — `context/product-context.md`의 필수 항목(서비스 배경, 타겟 유저, 핵심 가치, 비즈니스 목표, 핵심 시나리오, 플랫폼, 톤&무드)을 점검한다.
    - 빠진 항목이 있으면 사용자에게 질문하고, 답변을 받아 `context/product-context.md`를 업데이트한다.
    - **Discovery가 완료되어야 다음 단계로 진행한다.**
-4. **Figma 1-Pager를 생성한다:**
-   - `playbooks/create-figma-onepager.md` — Figma 파일을 만들고, Discovery 결과를 1-pager 프레임으로 구성한다.
-   - 파일 정보를 `specs/figma-info.md`에 기록한다.
-   - 이후 Phase 2에서 Wireframe Agent가 같은 Figma 파일의 1-pager 우측에 와이어프레임을 배치한다.
-   - **Figma를 사용할 수 없으면 중단하지 않는다.** `specs/product-1-pager.md`에 마크다운으로 작성하고 진행한다.
-5. Playbook을 순서대로 실행한다:
+4. **Figma 사용 가능 여부를 먼저 확인한다:**
+   - `playbooks/check-figma-access.md` — 연결 상태를 확인하고, **안 되면 멈춰서 사용자에게 묻는다.**
+   - 조용히 폴백하지 않는다. 연결은 1~2분이면 되는데, 묻지 않으면 Phase 6까지 다 돈 뒤에야
+     Figma 산출물이 없다는 것을 알게 되고 전체를 다시 돌려야 한다.
+   - 사용자의 선택을 `specs/figma-info.md`에 기록한다. **이후 Phase는 다시 묻지 않는다.**
+5. **1-Pager를 생성한다:**
+   - Figma 사용 → `playbooks/create-figma-onepager.md`. 파일 정보를 `specs/figma-info.md`에 기록한다.
+     Phase 2에서 Wireframe Agent가 같은 파일의 1-pager 우측에 와이어프레임을 배치한다.
+   - Figma 미사용 → `specs/product-1-pager.md`에 같은 구조의 마크다운으로 작성한다.
+6. Playbook을 순서대로 실행한다:
    - `playbooks/analyze-requirements.md`
    - `playbooks/create-user-flow.md`
    - `playbooks/create-screen-spec.md`
    - `playbooks/create-checklist.md` — **Critic이 채점할 기준을 미리 확정한다**
-6. Output: `context/product-context.md` (업데이트), Figma 1-pager, `specs/figma-info.md`, `specs/user-flow.md`, `specs/screens.md`, `evaluation/checklist.md` (Part A)
-7. **체크포인트**: `playbooks/report-checkpoint.md`를 실행한다.
+7. Output: `context/product-context.md` (업데이트), 1-pager(Figma 또는 `specs/product-1-pager.md`), `specs/figma-info.md`, `specs/user-flow.md`, `specs/screens.md`, `evaluation/checklist.md` (Part A)
+8. **체크포인트**: `playbooks/report-checkpoint.md`를 실행한다.
    산출물 표에 Key Scenarios 개수, 화면 개수, 막다른 화면 0 여부, checklist Part A 생성 여부, Figma 사용/폴백을 넣는다.
 
 ### Phase 2: Wireframe (Wireframe Agent)
 1. `agents/wireframe.md`를 읽는다.
 2. Context를 읽는다: `context/design-system.md`, `context/ux-principles.md`, `specs/screens.md`, `specs/figma-info.md`
-3. Figma MCP `figma-use` 스킬을 로드한다 (MCP resource: `skill://figma/figma-use/SKILL.md`).
+3. `specs/figma-info.md`를 보고 Phase 1에서 결정된 경로를 따른다. **여기서 다시 묻지 않는다.**
+   Figma 사용이면 `figma-use` 스킬을 로드한다 (MCP resource: `skill://figma/figma-use/SKILL.md`).
 4. Playbook을 순서대로 실행한다:
    - `playbooks/map-components.md` — Screen 요소를 DS 컴포넌트에 매핑
    - `playbooks/design-layout.md` — 정보 계층과 레이아웃 설계
@@ -53,8 +58,8 @@
 5. Output: Figma 파일 내 화면별 와이어프레임 프레임, `specs/figma-info.md` 업데이트
 6. **체크포인트**: `playbooks/report-checkpoint.md` — 와이어프레임 화면 수, Mobile/Desktop 쌍 여부, Figma 사용/폴백
 
-**Figma를 사용할 수 없는 경우** (MCP 미연결 등)
-파이프라인을 중단하지 않는다. 사용자에게 전환 사실을 알리고 HTML 경로로 진행한다:
+**Figma 미사용으로 결정된 경우** (Phase 1의 `check-figma-access.md` 결과)
+HTML 경로로 진행한다:
    - `playbooks/build-wireframe-html.md` — HTML 와이어프레임 작성
    - `playbooks/implement-responsive.md` — 반응형 구현
 

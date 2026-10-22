@@ -94,8 +94,8 @@ Skill (트리거 명령)  →  Agent (주체)  →  Playbook (절차)
 
 | Agent | 파일 | 역할 | Playbooks |
 |-------|------|------|-----------|
-| Planner | `agents/planner.md` | PM — 문제 구조화 | discover-context, create-figma-onepager, analyze-requirements, create-user-flow, create-screen-spec, **create-checklist**, report-checkpoint |
-| Wireframe | `agents/wireframe.md` | UX Designer — 화면 구조 설계 (Figma) | map-components, design-layout, build-wireframe-figma, implement-responsive-figma, report-checkpoint |
+| Planner | `agents/planner.md` | PM — 문제 구조화 | discover-context, check-figma-access, create-figma-onepager, analyze-requirements, create-user-flow, create-screen-spec, **create-checklist**, report-checkpoint |
+| Wireframe | `agents/wireframe.md` | UX Designer — 화면 구조 설계 (Figma) | check-figma-access, map-components, design-layout, build-wireframe-figma, implement-responsive-figma, report-checkpoint |
 | Prototype | `agents/prototype.md` | Interaction Designer — 경험 연결 | **build-prototype-html**, create-mock-data, connect-navigation, implement-interactions, manage-state, report-checkpoint |
 | Critic | `agents/critic.md` | Design Reviewer — 결과 검증 | **check-prototype-runs**, check-requirements, check-ux-principles, check-design-system, write-critique-report, report-checkpoint |
 
@@ -150,6 +150,7 @@ productdesign_harness/
 │   └── critic.md
 ├── playbooks/                ← Playbook (어떻게 하는가)
 │   ├── discover-context.md
+│   ├── check-figma-access.md         ← Figma 가용성 확인 (안 되면 질문)
 │   ├── create-figma-onepager.md
 │   ├── analyze-requirements.md
 │   ├── create-user-flow.md
