@@ -42,6 +42,9 @@ Claude Code는 `/wire` 슬래시 명령으로 바로 시작하지만, Codex에�
 `specs/figma-info.md`에는 "Figma 미사용"과 그 이유를 기록한다.
 이것은 폴백이지 실패가 아니다. **파이프라인을 중단하지 않는다.**
 
+`playbooks/check-figma-access.md`는 Figma 사용 여부를 사용자에게 묻는 Playbook이지만,
+**Codex에서는 묻지 않는다.** 선택지가 없으므로 바로 폴백하고 그 사실만 기록한다.
+
 ### 2. 브라우저 도구가 없을 수 있다 → 실행 검증
 
 Phase 4의 `check-prototype-runs.md`(브라우저 실행 검증)를 수행할 수 없으면:

@@ -114,6 +114,24 @@ codex
 
 Codex는 `AGENTS.md`를 자동으로 읽고, 같은 파이프라인(Plan → Wireframe → Prototype → Critique)을 실행합니다. 단, Figma MCP 연동은 지원되지 않으므로 와이어프레임은 HTML로 생성됩니다.
 
+### Figma 연동
+
+Figma MCP가 연결되어 있으면 Phase 1에서 **1-Pager**를, Phase 2에서 **와이어프레임(Mobile + Desktop)** 을 Figma 파일에 직접 생성합니다.
+
+연결되어 있지 않으면 파이프라인이 Phase 1에서 **멈추고 물어봅니다.**
+
+```
+Figma MCP에 연결할 수 없습니다. 어떻게 할까요?
+  1. Figma 연결하고 진행    — 인증 후 Figma에 생성합니다
+  2. Figma 없이 진행        — 1-pager는 마크다운, 와이어프레임은 HTML.
+                             나중에 Figma로 바꾸려면 Phase 1부터 다시 실행해야 합니다
+  3. 중단
+```
+
+조용히 폴백하지 않습니다. 연결은 1~2분이면 되는데, 묻지 않으면 끝까지 다 돌고 나서야 Figma 산출물이 없다는 걸 알게 되기 때문입니다.
+
+선택은 `specs/figma-info.md` 에 기록되고, 이후 단계에서는 다시 묻지 않습니다.
+
 ---
 
 ## 슬래시 명령어가 안 뜰 때
@@ -306,7 +324,7 @@ productdesign_harness/
 ├── playbooks/                   ← Playbook (실행 절차)
 │   ├── discover-context.md      ←   Discovery (질문)
 │   ├── create-figma-onepager.md ←   Figma 1-Pager 생성
-│   └── ...                      ←   총 23개
+│   └── ...                      ←   총 24개
 ├── context/                     ← Context (배경 지식)
 │   ├── product-context.md       ←   제품 배경 (빈 템플릿 — Discovery가 채움)
 │   ├── ux-principles.md         ←   UX 원칙 (수정해서 사용)
@@ -353,7 +371,7 @@ productdesign_harness/
 | `context/ux-principles.md` | 팀의 원칙이 따로 있을 때 | 범용 7원칙이 적용됩니다 |
 | `context/product-context.md` | 미리 채워두고 싶을 때 | Discovery 단계에서 AI가 질문해서 채웁니다 |
 | `evaluation/checklist.md` | Part B(공통 기준)를 바꾸고 싶을 때 | Part A(제품별)는 Planner가 자동 생성합니다 |
-| `playbooks/` | 절차를 추가·변경할 때 | 기본 23개 Playbook이 실행됩니다 |
+| `playbooks/` | 절차를 추가·변경할 때 | 기본 24개 Playbook이 실행됩니다 |
 
 **Playbook 추가**: `playbooks/`에 새 .md 파일을 만들고 Agent(`agents/*.md`)나 Skill(`.claude/commands/*.md`)의 실행 순서에 추가합니다.
 

@@ -25,11 +25,12 @@ Screen Spec을 받아 실제 화면의 정보 계층, CTA 배치, 컴포넌트 �
 4. `specs/figma-info.md` — Figma 파일 정보 (fileKey, 시작 X 좌표)
 
 ## 사용하는 Playbooks
-1. `playbooks/map-components.md` — Screen 요소를 DS 컴포넌트에 매핑
-2. `playbooks/design-layout.md` — 정보 계층과 레이아웃 설계
-3. `playbooks/build-wireframe-figma.md` — Figma에 와이어프레임 프레임 생성
-4. `playbooks/implement-responsive-figma.md` — Mobile + Desktop 프레임 쌍으로 반응형 표현
-5. `playbooks/report-checkpoint.md` — 체크포인트 보고 (마지막)
+1. `playbooks/check-figma-access.md` — `specs/figma-info.md`에 결정이 없을 때만 확인
+2. `playbooks/map-components.md` — Screen 요소를 DS 컴포넌트에 매핑
+3. `playbooks/design-layout.md` — 정보 계층과 레이아웃 설계
+4. `playbooks/build-wireframe-figma.md` — Figma에 와이어프레임 프레임 생성
+5. `playbooks/implement-responsive-figma.md` — Mobile + Desktop 프레임 쌍으로 반응형 표현
+6. `playbooks/report-checkpoint.md` — 체크포인트 보고 (마지막)
 
 ## Figma MCP 사용 규칙
 - `use_figma` 호출 전 반드시 `figma-use` 스킬을 로드한다.

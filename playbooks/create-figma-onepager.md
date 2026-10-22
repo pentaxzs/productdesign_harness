@@ -10,10 +10,12 @@ Discovery 결과를 Figma 파일에 1-pager 프레임으로 구성한다.
 ## 전제 조건
 - `playbooks/discover-context.md` (Discovery)가 완료되어 `context/product-context.md`가 채워져 있어야 한다.
 
-> **Figma를 사용할 수 없는 경우** (MCP 미인증·미연결, Codex 환경 등)
-> **파이프라인을 중단하지 않는다.** 사용자에게 알리고 `specs/product-1-pager.md`에
-> 같은 구조의 마크다운 1-pager를 작성한 뒤 다음 단계로 진행한다.
-> `specs/figma-info.md`에는 "Figma 미사용"을 기록한다.
+> **이 Playbook 전에 `playbooks/check-figma-access.md`를 먼저 실행한다.**
+> 거기서 Figma 사용 여부가 결정된다. 사용 불가인데 사용자가 폴백을 선택했다면,
+> `specs/product-1-pager.md`에 아래와 같은 구조의 마크다운 1-pager를 작성하고 다음 단계로 간다.
+>
+> **가용성 확인 없이 이 Playbook을 시작하지 않는다.** 작업 도중 실패하면
+> 사용자는 선택할 기회 없이 폴백을 떠안게 된다.
 
 ## 단일 출처 원칙
 **`context/product-context.md`가 원본이다.** 1-pager는 그 표현형일 뿐이다.
