@@ -219,8 +219,9 @@ cd prototype && python3 -m http.server 8000
 
 ```
 productdesign_harness/
-├── CLAUDE.md                    ← 하네스 규칙 (Claude Code)
-├── AGENTS.md                    ← 하네스 규칙 (Codex)
+├── CLAUDE.md                    ← 하네스 규칙 (단일 출처)
+├── AGENTS.md                    ← Codex 진입점 (절차는 wire.md 참조)
+├── scripts/check-consistency.sh ← 문서 일관성 검사
 ├── .claude/commands/            ← Skill (트리거, Claude Code 전용)
 │   ├── wire.md                  ←   전체 파이프라인
 │   ├── plan-wire.md             ←   Plan만
@@ -257,6 +258,20 @@ productdesign_harness/
 | **Context** | 무엇을 알아야 하는가 | 배경 지식 |
 | **Rules** | 무엇을 지켜야 하는가 | 원칙 |
 | **Evaluation** | 제대로 만들었는가 | 체크리스트 |
+
+## 하네스를 수정했다면
+
+문서 일관성 검사를 돌립니다. 같은 내용이 여러 파일에 흩어져 있어
+한쪽만 고치면 어긋나는 것을 잡아줍니다.
+
+```bash
+./scripts/check-consistency.sh
+```
+
+- playbook 참조가 실제 파일과 일치하는지
+- `CLAUDE.md` Agent 표가 `agents/*.md` 와 일치하는지
+- README의 playbook 개수 표기가 맞는지
+- `AGENTS.md` 가 절차를 복제하고 있지 않은지
 
 ## 커스터마이징
 

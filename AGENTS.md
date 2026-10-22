@@ -1,144 +1,80 @@
-# Wireframe Prototype Harness
+# Wireframe Prototype Harness — Codex 진입점
 
-이 프로젝트는 AI가 반복적으로 좋은 프로토타입을 만들 수 있는 환경(Harness)입니다.
-Production 개발이 아니라, "이 경험으로 개발 논의를 시작할 수 있는가?"를 판단할 수 있는 Interactive Prototype을 만드는 것이 목표입니다.
+이 파일은 **Codex용 진입점**입니다. 절차와 규칙을 여기에 적지 않습니다.
+Claude Code는 `/wire` 슬래시 명령으로 바로 시작하지만, Codex에는 그 기능이 없어
+이 파일이 대신 시작점 역할을 합니다.
 
-## Context (항상 참조)
-- `context/product-context.md` — 제품 배경, 타겟 유저, 핵심 시나리오
-- `context/ux-principles.md` — 7가지 UX 원칙
-- `context/design-system.md` — Figma Simple Design System 컴포넌트 목록과 사용 규칙
-
-## Rules (반드시 준수)
-
-### Design System 우선
-- 새로운 UI 컴포넌트를 만들기 전에 `context/design-system.md`에서 적합한 컴포넌트를 먼저 찾는다.
-- 기존 컴포넌트로 해결할 수 없을 때만 커스텀 UI를 만들되, 기존 토큰(색상, 간격, radius)을 사용한다.
-
-### 화면 설계 원칙
-- Primary CTA는 화면당 하나만 둔다. 명확한 우선순위를 가진다.
-- 주요 Task는 최소 단계로 구성한다.
-- Empty / Error / Loading State를 반드시 고려한다.
-- 정보 계층을 명확하게 한다 — 핵심 정보가 먼저 보인다.
-
-### 반응형
-- Mobile First로 설계한다 (기준 너비: 375px).
-- PC 확장 (기준 너비: 1440px).
-- 터치 타겟 최소 44px.
-
-### Prototype 범위
-- HTML/CSS/JS로 Interactive Prototype을 만든다.
-- 실제 API 호출 없이 목업 데이터로 동작한다.
-- 화면 간 네비게이션, 상태 변화, 인터랙션이 동작해야 한다.
+> **왜 여기에 절차를 복제하지 않는가**
+> 예전에는 이 파일이 파이프라인 전체를 복제하고 있었고, `.claude/commands/wire.md`만
+> 갱신되면서 playbook 3개(`build-prototype-html`, `check-prototype-runs`, `create-checklist`)가
+> 누락된 채로 뒤처졌다. 그 상태의 Codex는 브라우저 검증 없이 Pass 판정을 냈다.
+> 같은 내용을 두 곳에 두면 반드시 어긋난다. **단일 출처만 둔다.**
 
 ---
 
-## 구조: Agent → Playbook → Context
+## 실행 절차
 
-```
-사용자 요청  →  Agent (주체)  →  Playbook (절차)
-```
+사용자가 프로토타입 생성을 요청하면:
 
-| 개념 | 역할 | 위치 |
-|------|------|------|
-| Agent | 누가 일하는가, 무엇을 아는가 | `agents/` |
-| Playbook | 어떻게 일하는가 (재사용 가능) | `playbooks/` |
-| Context | 무엇을 알아야 하는가 | `context/` |
-| Rules | 무엞을 지켜야 하는가 | 이 파일 (AGENTS.md) |
-| Evaluation | 제대로 만들었는가 | `evaluation/` |
+1. **`CLAUDE.md`를 읽는다** — 반드시 지켜야 할 규칙 (Design System 우선, 화면당 Primary CTA 1개,
+   Mobile First 375px / PC 1440px, 터치 타겟 44px, 상태 제어 쿼리, 진행 보고, 종료 조건)
+2. **`.claude/commands/wire.md`를 읽는다** — Phase 1~6 전체 절차. 어떤 Agent와 Playbook을
+   어떤 순서로 실행할지가 모두 여기에 있다
+3. 그 절차를 따른다. 단, 아래 **Codex 환경 차이**를 적용한다
 
----
-
-## Agents
-
-| Agent | 파일 | 역할 | Playbooks |
-|-------|------|------|-----------|
-| Planner | `agents/planner.md` | PM — 문제 구조화 | discover-context, create-figma-onepager, analyze-requirements, create-user-flow, create-screen-spec |
-| Wireframe | `agents/wireframe.md` | UX Designer — 화면 구조 설계 | map-components, design-layout, build-wireframe-html, implement-responsive |
-
-> Codex 환경에는 Figma MCP가 없으므로 **HTML 경로**를 사용한다.
-> Claude Code의 기본 경로(Figma)와 달리 `build-wireframe-html` + `implement-responsive`가 와이어프레임을 담당하며,
-> 이어지는 Prototype 단계에서 `build-prototype-html`은 생략한다 (HTML이 이미 존재하므로).
->
-> 브라우저 실행 검증(`check-prototype-runs`)을 수행할 수 없으면
-> 리포트에 "실행 검증 미수행"을 명시하고, `Pass` 판정에 단서를 붙인다.
->
-> 각 Phase를 마칠 때 `playbooks/report-checkpoint.md`로 산출물을 요약하고 **멈춰서 묻는다.**
-> 선택지는 다음 단계 진행 / 끝까지 진행 / 이 단계 수정 / 멈춤이며,
-> "끝까지 진행"을 고른 뒤에는 멈추지 않되 요약은 계속 출력한다.
-> 요청에 `--auto`가 있으면 처음부터 멈추지 않는다. Refine은 어느 경우에도 멈추지 않는다.
->
-> 프로토타입은 상태 제어 쿼리(`?reset=1` `?seed=0` `?state=loading` `?state=error`)를
-> 반드시 구현한다. 없으면 Empty/Loading/Error를 검증할 수 없다.
-| Prototype | `agents/prototype.md` | Interaction Designer — 경험 연결 | create-mock-data, connect-navigation, implement-interactions, manage-state |
-| Critic | `agents/critic.md` | Design Reviewer — 결과 검증 | check-requirements, check-ux-principles, check-design-system, write-critique-report |
+특정 단계만 실행하려면 `.claude/commands/` 의 해당 파일을 읽는다:
+`plan-wire.md`(기획) `wireframe.md`(와이어프레임) `proto.md`(프로토타입) `critique.md`(검증)
 
 ---
 
-## Pipeline
+## Codex 환경 차이
 
-사용자가 프로토타입 생성을 요청하면 다음 파이프라인을 순서대로 실행한다.
+`wire.md`의 절차를 그대로 따르되, 아래 세 가지만 다르게 처리한다.
 
-```
-Phase 1: Plan     (Planner Agent)     → context/ + specs/
-  ↓ Discovery: 부족한 맥락은 질문으로 확보
-  ↓ 사용자 확인 (체크포인트)
-Phase 2: Wireframe (Wireframe Agent)  → HTML 와이어프레임
-Phase 3: Prototype (Prototype Agent)  → prototype/ Interactive
-Phase 4: Critique  (Critic Agent)     → evaluation/
-  ↓ 사용자에게 결과 보여줌 (체크포인트)
-Phase 5: Refine    (조건부, 최대 3회) → prototype/ 수정
-Phase 6: Human Review                → 최종 안내
-```
+### 1. Figma MCP가 없다 → HTML 경로
 
-### Phase 1: Plan (Planner Agent)
-1. `agents/planner.md`를 읽는다.
-2. Context를 읽는다: `context/product-context.md`, `context/ux-principles.md`, `context/design-system.md`
-3. Discovery 먼저 실행한다: `playbooks/discover-context.md`
-4. Playbook을 순서대로 실행한다:
-   - `playbooks/analyze-requirements.md`
-   - `playbooks/create-user-flow.md`
-   - `playbooks/create-screen-spec.md`
-5. 체크포인트: 사용자 확인
+| wire.md의 지시 | Codex에서 |
+|---|---|
+| Phase 1 — `create-figma-onepager.md`로 Figma 1-pager 생성 | **`specs/product-1-pager.md`에 마크다운으로 작성** |
+| Phase 2 — `build-wireframe-figma.md` + `implement-responsive-figma.md` | **`build-wireframe-html.md` + `implement-responsive.md`** |
+| Phase 3 — `build-prototype-html.md`로 Figma → HTML 변환 | **생략** (HTML이 이미 존재하므로) |
 
-### Phase 2: Wireframe (Wireframe Agent)
-1. `agents/wireframe.md`를 읽는다.
-2. Context를 읽는다: `context/design-system.md`, `context/ux-principles.md`, `specs/screens.md`
-3. Playbook을 순서대로 실행한다:
-   - `playbooks/map-components.md`
-   - `playbooks/design-layout.md`
-   - `playbooks/build-wireframe-html.md`
-   - `playbooks/implement-responsive.md`
+`specs/figma-info.md`에는 "Figma 미사용"과 그 이유를 기록한다.
+이것은 폴백이지 실패가 아니다. **파이프라인을 중단하지 않는다.**
 
-### Phase 3: Prototype (Prototype Agent)
-1. `agents/prototype.md`를 읽는다.
-2. Playbook을 순서대로 실행한다:
-   - `playbooks/create-mock-data.md`
-   - `playbooks/connect-navigation.md`
-   - `playbooks/implement-interactions.md`
-   - `playbooks/manage-state.md`
+### 2. 브라우저 도구가 없을 수 있다 → 실행 검증
 
-### Phase 4: Critique (Critic Agent)
-1. `agents/critic.md`를 읽는다.
-2. Playbook을 순서대로 실행한다:
-   - `playbooks/check-requirements.md`
-   - `playbooks/check-ux-principles.md`
-   - `playbooks/check-design-system.md`
-   - `playbooks/write-critique-report.md`
-3. 체크포인트: 사용자에게 결과 보여줌
+Phase 4의 `check-prototype-runs.md`(브라우저 실행 검증)를 수행할 수 없으면:
 
-### Phase 5: Refine (조건부)
-Critique 판정이 Revise이면 수정 후 재검증. 최대 3회 반복.
+- 리포트에 **"실행 검증 미수행"과 그 이유**를 명시한다
+- 판정은 코드 검토 기준으로만 내리되, `Pass`에 **"(실행 미검증)"** 단서를 붙인다
+- 검증하지 않은 것을 검증한 것처럼 기록하지 않는다
 
-### Phase 6: Human Review
-Pass 판정이거나 Refine 3회 완료 시 최종 안내.
+브라우저 도구를 쓸 수 있는 환경이면 그대로 수행한다. 코드만 읽어서는 백지 화면,
+레이아웃 깨짐, 반응 없는 버튼을 찾을 수 없다.
+
+### 3. 슬래시 명령이 없다 → 진행 보고
+
+`wire.md`의 체크포인트 규칙(`playbooks/report-checkpoint.md`)은 그대로 적용한다.
+각 Phase를 마치면 산출물을 요약하고 **멈춰서 묻는다.**
+
+`--auto` 플래그 대신, 사용자가 "끝까지 진행"을 요청하면 이후 묻지 않는다.
+**Refine은 어느 경우에도 멈추지 않는다.**
 
 ---
 
-## 종료 조건 (Exit Criteria)
-다음을 모두 만족하면 Human Review로 전환한다:
-1. 핵심 User Flow를 처음부터 끝까지 수행할 수 있다.
-2. 주요 Interaction을 직접 확인할 수 있다.
-3. Requirement 누락이 없다.
-4. 주요 Empty / Error / Loading State가 표현되어 있다.
-5. UX Principle을 심각하게 위반하지 않는다.
-6. Design System 컴포넌트를 기준으로 주요 화면이 구성되어 있다.
+## 파일 지도
+
+| 알고 싶은 것 | 읽을 파일 |
+|---|---|
+| 지켜야 할 규칙 | `CLAUDE.md` |
+| 전체 절차 (Phase 1~6) | `.claude/commands/wire.md` |
+| 단계별 절차 | `.claude/commands/{plan-wire,wireframe,proto,critique}.md` |
+| 각 Agent의 역할과 판단 기준 | `agents/{planner,wireframe,prototype,critic}.md` |
+| 구체적 작업 방법 | `playbooks/*.md` (23개) |
+| 제품 배경·UX 원칙·디자인 시스템 | `context/*.md` |
+| 검증 체크리스트 | `evaluation/checklist.md` |
+| 완성된 산출물 예시 | `examples/cardfit/` |
+
+**이 파일에 절차나 규칙을 추가하지 않는다.** 추가해야 할 것이 있으면
+`CLAUDE.md`(규칙) 또는 `.claude/commands/wire.md`(절차)에 넣는다.
