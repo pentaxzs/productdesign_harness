@@ -34,6 +34,11 @@ Screen Spec을 받아 실제 화면의 정보 계층, CTA 배치, 컴포넌트 �
 
 ## Figma MCP 사용 규칙
 - `use_figma` 호출 전 반드시 `figma-use` 스킬을 로드한다.
+- **`resize(W, H)`는 양축을 FIXED로 되돌린다.** 폭만 고정하려 했다면 세로를
+  `layoutSizingVertical = "HUG"`로 명시적으로 복구한다. 안 하면 콘텐츠가 잘린다.
+- **HUG 폭 부모에 FILL 자식을 넣지 않는다.** 부모 폭을 먼저 확정한다.
+- **가로 Auto Layout은 넘쳐도 에러가 없다.** 좁은 폭(375px)에서는 `layoutWrap = "WRAP"`을 고려한다.
+- 자세한 내용과 검증 스크립트는 `playbooks/build-wireframe-figma.md`의 "Auto Layout 함정 3종".
 - 한 번의 `use_figma` 호출에 10개 이하의 논리 연산만 수행한다.
 - 텍스트 노드 생성 전 `loadFontAsync`를 호출한다.
 - 모든 생성/수정 노드의 ID를 `return`한다.
@@ -56,6 +61,8 @@ Screen Spec을 받아 실제 화면의 정보 계층, CTA 배치, 컴포넌트 �
 
 ## 완료 조건
 - 모든 Screen Spec의 화면이 Figma 프레임으로 존재한다.
+- **구조 검증 스크립트가 통과하고, 스크린샷을 실제로 확인했다.**
+  (`playbooks/build-wireframe-figma.md` 5절 — `use_figma`는 에러 없이 성공해도 화면이 깨질 수 있다)
 - 각 화면에 Mobile(375px)과 Desktop(1440px) 프레임이 있다.
 - Design System 컴포넌트가 우선 사용되었다.
 - 정보 계층이 명확하다 (크기, 위치, 대비로 구분).
