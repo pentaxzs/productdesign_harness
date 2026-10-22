@@ -18,8 +18,9 @@ Wireframe Agent를 실행한다.
    - `playbooks/design-layout.md` — 레이아웃 설계
    - `playbooks/build-wireframe-figma.md` — Figma 와이어프레임 프레임 생성
    - `playbooks/implement-responsive-figma.md` — Mobile(375px) + Desktop(1440px) 프레임 쌍
-5. 생성된 프레임 nodeId를 `specs/figma-info.md`에 기록한다.
-6. Agent의 완료 조건을 확인한다.
+5. 구조 검증 + 시각 검증을 수행한다 (`build-wireframe-figma.md` 5절).
+6. 생성된 프레임 nodeId를 `specs/figma-info.md`에 기록한다.
+7. Agent의 완료 조건을 확인한다.
 7. `playbooks/report-checkpoint.md`를 실행해 체크포인트를 보고한다.
    산출물 요약을 보여주고 **멈춰서** 다음 동작을 묻는다 (`--auto`가 있으면 묻지 않는다).
 
