@@ -19,7 +19,7 @@ AI 프로토타이핑을 위한 Harness Engineering 템플릿.
 ```
 
 `/wire` 명령은 `.claude/commands/wire.md` 한 파일이지만, 그 안에서 `agents/`, `playbooks/`,
-`context/` 의 파일 30여 개를 **상대 경로로** 불러옵니다. 명령 파일만 떼어내면 동작하지 않습니다.
+`context/` 의 파일 30개를 **상대 경로로** 불러옵니다. 명령 파일만 떼어내면 동작하지 않습니다.
 그래서 "스킬을 설치"하는 게 아니라 **폴더를 통째로 복제**하는 것이 곧 설치입니다.
 
 ```bash
@@ -44,20 +44,57 @@ cd japanese-app && claude   # → /wire
 
 ## 빠른 시작
 
-### 1. 제품 이름으로 클론
+### 1. 만들 제품의 이름으로 클론
 
-**하네스 1개 = 제품 1개**입니다. 레포 이름을 만들 제품 이름으로 바꿔서 클론하세요.
+**하네스 1개 = 제품 1개**입니다.
+아래 `my-product` 자리에 **실제로 만들 제품 이름을 직접 적으세요.** 그 이름으로 폴더가 생깁니다.
 
 ```bash
-git clone https://github.com/pentaxzs/productdesign_harness.git my-product
-cd my-product
+# my-product 를 실제 제품 이름으로 바꾸세요
+git clone https://github.com/pentaxzs/productdesign_harness.git <제품명>
+cd <제품명>
 ```
 
-제품이 늘어나면 디렉토리를 하나 더 클론합니다. `context/`, `specs/`, `prototype/`, `evaluation/`이 제품별로 분리됩니다.
+예를 들어 일본어 학습 앱을 만든다면:
 
-### 2. 하네스 루트에서 실행
+```bash
+git clone https://github.com/pentaxzs/productdesign_harness.git japanese-app
+cd japanese-app
+```
 
-> ⚠️ **반드시 `cd` 한 다음 실행하세요.** 상위 디렉토리에서 실행하면 `/wire`가 등록되지 않습니다. ([왜?](#슬래시-명령어가-안-뜰-때))
+이렇게 하면 `japanese-app/` 폴더가 생기고, **그 안에 그 제품만의 하네스 한 벌**이 들어갑니다.
+
+```
+japanese-app/
+├── .claude/commands/   ← /wire 가 여기 있습니다. 이 폴더 안에서만 동작합니다
+├── agents/ playbooks/  ← 파이프라인 본체
+├── context/            ← 이 제품의 배경·UX 원칙·디자인 시스템
+├── specs/              ← 이 제품의 기획 산출물
+├── prototype/          ← 이 제품의 프로토타입
+└── evaluation/         ← 이 제품의 검증 리포트
+```
+
+제품이 늘어나면 **다른 이름으로 한 번 더 클론합니다.**
+
+```bash
+git clone https://github.com/pentaxzs/productdesign_harness.git cardfit
+git clone https://github.com/pentaxzs/productdesign_harness.git shopping-app
+```
+
+각 폴더는 서로를 모릅니다. `japanese-app` 에서 `/wire` 를 돌리면 `japanese-app/specs/` 에만 쓰고,
+`cardfit/` 은 건드리지 않습니다.
+
+### 2. 그 폴더 안에서 실행
+
+> ⚠️ **`claude` 를 반드시 제품 폴더 안에서 실행하세요.**
+> `/wire` 는 **클론한 폴더 안에서만** 동작합니다. 상위 폴더에서 실행하면 등록되지 않습니다.
+> 이미 실행 중인 세션에서 `cd` 로 옮겨가는 것으로는 **안 됩니다** — 재시작해야 합니다.
+> ([왜?](#슬래시-명령어가-안-뜰-때))
+
+```bash
+cd japanese-app   # 제품 폴더로 이동
+claude            # 여기서 실행해야 /wire 가 등록됩니다
+```
 
 #### Claude Code
 
@@ -102,15 +139,48 @@ workspace/
 
 → Claude Code를 재시작하세요.
 
+### 세션 중에 `cd` 로 옮겨감
+
+이게 가장 흔한 경우입니다. 명령어 목록은 **`claude` 를 실행한 그 디렉토리** 기준으로 시작할 때 한 번 정해집니다.
+세션 안에서 `cd` 로 폴더를 옮겨 다녀도 목록은 바뀌지 않습니다.
+
+```bash
+claude                 # MakersBook 에서 시작 → 여기 기준으로 목록 확정
+# ... 세션 안에서 cd my-product 해봐야 /wire 는 여전히 없음
+```
+
+→ 세션을 종료하고 제품 폴더 안에서 다시 `claude` 를 실행하세요.
+`/` 만 입력했을 때 목록에 `wire` 가 보이면 성공입니다.
+
 ### 전역 등록(`~/.claude/commands/`)을 권장하지 않는 이유
 
 명령어 파일만 전역에 두면 **하네스가 동작하지 않습니다.**
 
-1. **본체가 안 따라옵니다** — `.claude/commands/*.md`는 `agents/`, `playbooks/`, `context/` 안의 파일 31개를 **상대 경로로** 참조하는 진입점일 뿐입니다. 다른 디렉토리에서 호출하면 전부 읽지 못합니다.
+1. **본체가 안 따라옵니다** — `.claude/commands/*.md`는 `agents/`, `playbooks/`, `context/` 안의 파일 30개를 **상대 경로로** 참조하는 진입점일 뿐입니다. 다른 디렉토리에서 호출하면 전부 읽지 못합니다.
 2. **규칙이 로드되지 않습니다** — `CLAUDE.md`의 품질 기준(DS 우선, 화면당 Primary CTA 1개, 375/1440px, 터치 타겟 44px, Empty/Error/Loading 필수)은 실행 위치가 하네스 안일 때만 컨텍스트에 올라갑니다. 전역 호출은 **절차는 돌지만 기준이 빠진 채** 실행됩니다.
 3. **산출물이 엉뚱한 곳에 쌓입니다** — 파이프라인은 `specs/`, `prototype/`, `evaluation/`에 파일을 쓰고 `context/product-context.md`를 갱신합니다.
 
 전역 등록은 `/commit`처럼 실행 위치에 독립적인 명령어에 적합합니다. 이 하네스는 디렉토리 전체가 런타임입니다.
+
+### 제품마다 따로 두면 좋은 점
+
+전역 하나로 쓰는 것보다 제품마다 폴더를 두는 쪽이 나은 이유입니다.
+
+| | 제품별 클론 | 전역 하나 |
+|---|---|---|
+| **제품 맥락** | `context/product-context.md` 가 제품마다 하나. 섞이지 않음 | 제품을 바꿀 때마다 덮어써야 함 |
+| **UX 원칙·디자인 시스템** | 제품 성격에 맞게 각자 수정 | 모든 제품이 같은 기준을 강요받음 |
+| **산출물** | `specs/` `prototype/` `evaluation/` 이 제품 폴더 안에 | 어디에 쌓일지 불분명 |
+| **버전 관리** | 제품별 git 이력. 기획이 어떻게 바뀌었는지 추적 가능 | 하나의 이력에 여러 제품이 뒤섞임 |
+| **되돌리기** | 망치면 그 폴더만 지우면 됨 | 다른 제품까지 영향 |
+| **공유** | 폴더째 전달하면 그대로 재현됨 | 받는 쪽에서 맥락을 다시 맞춰야 함 |
+
+특히 **UX 원칙과 디자인 시스템이 제품마다 달라지는 게 정상**입니다.
+일본어 학습 앱에는 "진도와 성취를 눈에 보이게" 같은 원칙이 필요하고,
+금융 서비스에는 "정보 출처와 기준일 표기"가 필요합니다. 한 벌로 공유할 수 없습니다.
+
+하네스 자체가 개선되면 각 폴더에서 [업스트림으로 받아옵니다](#하네스-업데이트-받기).
+제품 내용은 그대로 두고 `agents/` · `playbooks/` 만 갱신됩니다.
 
 ## 명령어 (Claude Code)
 
