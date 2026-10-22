@@ -8,7 +8,7 @@ AI 프로토타이핑을 위한 Harness Engineering 템플릿.
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — 슬래시 명령어(`/wire`)로 파이프라인 실행
 - [Codex](https://github.com/openai/codex) — `AGENTS.md` 기반으로 파이프라인 실행
-- Figma MCP 연동 시 Figma에 직접 와이어프레임 생성 가능 (Claude Code만 해당)
+- Figma MCP 연동 시 Figma에 직접 1-Pager와 와이어프레임 생성 가능 (Claude Code / Codex 모두)
 
 ## 이 하네스를 쓰는 방식
 
@@ -112,11 +112,18 @@ codex
 > OO 프로토타입을 만들어줘. AGENTS.md의 파이프라인을 따라 실행해줘.
 ```
 
-Codex는 `AGENTS.md`를 자동으로 읽고, 같은 파이프라인(Plan → Wireframe → Prototype → Critique)을 실행합니다. 단, Figma MCP 연동은 지원되지 않으므로 와이어프레임은 HTML로 생성됩니다.
+Codex는 `AGENTS.md`를 자동으로 읽고, 같은 파이프라인(Plan → Wireframe → Prototype → Critique)을 실행합니다.
 
 ### Figma 연동
 
 Figma MCP가 연결되어 있으면 Phase 1에서 **1-Pager**를, Phase 2에서 **와이어프레임(Mobile + Desktop)** 을 Figma 파일에 직접 생성합니다.
+
+**Claude Code와 Codex 모두 가능합니다.** 둘 다 MCP를 지원하므로, Figma 서버를 등록·인증해 두면 어느 쪽에서든 Figma 경로로 진행합니다.
+
+| 환경 | 확인 | 등록·인증 |
+|------|------|----------|
+| Claude Code | `/mcp` | figma MCP 인증 도구 호출 |
+| Codex | `codex mcp list` | `codex mcp add` → `codex mcp login <name>` |
 
 연결되어 있지 않으면 파이프라인이 Phase 1에서 **멈추고 물어봅니다.**
 
@@ -131,6 +138,7 @@ Figma MCP에 연결할 수 없습니다. 어떻게 할까요?
 조용히 폴백하지 않습니다. 연결은 1~2분이면 되는데, 묻지 않으면 끝까지 다 돌고 나서야 Figma 산출물이 없다는 걸 알게 되기 때문입니다.
 
 선택은 `specs/figma-info.md` 에 기록되고, 이후 단계에서는 다시 묻지 않습니다.
+비대화형(스크립트·CI)으로 실행 중이라 물을 수 없을 때만 바로 폴백합니다.
 
 ---
 
