@@ -31,7 +31,11 @@ Claude Code는 `/wire` 슬래시 명령으로 바로 시작하지만, Codex에�
 
 `wire.md`의 절차를 그대로 따르되, 아래 세 가지만 다르게 처리한다.
 
-### 1. Figma MCP가 없다 → HTML 경로
+### 1. Figma MCP가 등록되어 있지 않으면 → HTML 경로
+
+Codex도 MCP를 지원한다 (`codex mcp list` / `add` / `login`).
+Figma 서버를 등록해 두었다면 **Claude Code와 동일하게 Figma 경로로 진행한다.**
+아래 폴백은 서버가 없거나 인증되지 않았을 때만 적용한다.
 
 | wire.md의 지시 | Codex에서 |
 |---|---|
@@ -42,8 +46,11 @@ Claude Code는 `/wire` 슬래시 명령으로 바로 시작하지만, Codex에�
 `specs/figma-info.md`에는 "Figma 미사용"과 그 이유를 기록한다.
 이것은 폴백이지 실패가 아니다. **파이프라인을 중단하지 않는다.**
 
-`playbooks/check-figma-access.md`는 Figma 사용 여부를 사용자에게 묻는 Playbook이지만,
-**Codex에서는 묻지 않는다.** 선택지가 없으므로 바로 폴백하고 그 사실만 기록한다.
+`playbooks/check-figma-access.md`를 Claude Code와 동일하게 실행한다.
+Figma를 쓸 수 없으면 **묻는다.** Codex도 대화형이므로 물을 수 있다.
+연결 방법만 환경에 맞게 안내한다: `codex mcp add` 로 서버를 추가하고 `codex mcp login` 으로 인증한다.
+
+비대화형(스크립트·CI 등)으로 실행 중이라 물을 수 없을 때만 바로 폴백하고 그 사실을 기록한다.
 
 ### 2. 브라우저 도구가 없을 수 있다 → 실행 검증
 
