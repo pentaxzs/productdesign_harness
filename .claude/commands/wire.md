@@ -55,8 +55,11 @@
    - `playbooks/design-layout.md` — 정보 계층과 레이아웃 설계
    - `playbooks/build-wireframe-figma.md` — Figma에 와이어프레임 프레임 생성 (`use_figma`)
    - `playbooks/implement-responsive-figma.md` — Mobile(375px) + Desktop(1440px) 프레임 쌍
-5. Output: Figma 파일 내 화면별 와이어프레임 프레임, `specs/figma-info.md` 업데이트
-6. **체크포인트**: `playbooks/report-checkpoint.md` — 와이어프레임 화면 수, Mobile/Desktop 쌍 여부, Figma 사용/폴백
+5. **구조 검증 + 시각 검증을 수행한다** (`build-wireframe-figma.md` 5절).
+   `use_figma`는 에러 없이 성공해도 레이아웃이 깨질 수 있다. 스크린샷을 실제로 본다.
+6. Output: Figma 파일 내 화면별 와이어프레임 프레임, `specs/figma-info.md` 업데이트
+7. **체크포인트**: `playbooks/report-checkpoint.md` — 와이어프레임 화면 수, Mobile/Desktop 쌍 여부,
+   Figma 사용/폴백, **구조 검증 결과와 시각 검증으로 고친 결함 수**
 
 **Figma 미사용으로 결정된 경우** (Phase 1의 `check-figma-access.md` 결과)
 HTML 경로로 진행한다:
