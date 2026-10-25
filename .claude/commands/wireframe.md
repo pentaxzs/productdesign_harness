@@ -14,6 +14,7 @@ Wireframe Agent를 실행한다.
    - 기록이 없으면 `playbooks/check-figma-access.md`로 확인하고, 안 되면 사용자에게 묻는다.
    - Figma 사용이면 `figma-use` 스킬을 로드한다 (MCP resource: `skill://figma/figma-use/SKILL.md`).
 4. Agent의 Playbook을 순서대로 실행한다:
+   - `playbooks/select-design-system.md` — 컴포넌트 인벤토리 결정 (탐지 후 필요할 때만 질문)
    - `playbooks/map-components.md` — 컴포넌트 매핑
    - `playbooks/design-layout.md` — 레이아웃 설계
    - `playbooks/build-wireframe-figma.md` — Figma 와이어프레임 프레임 생성

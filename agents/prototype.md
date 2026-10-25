@@ -17,19 +17,21 @@ Wireframe Agent가 만든 화면을 사용자가 실제로 클릭하고 경험�
 2. `specs/screens.md` — 각 화면의 사용자 액션, 이동 경로
 3. `specs/figma-info.md` — Figma 와이어프레임 프레임 nodeId
 4. `context/ux-principles.md` — 최소 단계, 모든 상태 고려
-5. `context/design-system.md` — DS 토큰 (styles.css 작성용)
+5. `context/design-system.md` — 컴포넌트 인벤토리
+6. `context/design-tokens.md` — 색·타이포·간격 (있으면 `design-system.md`의 토큰보다 **우선**)
 
 ## 사용하는 Playbooks
-1. `playbooks/build-prototype-html.md` — **Figma 와이어프레임 → HTML 골격** (반드시 첫 번째)
-2. `playbooks/create-mock-data.md` — 목업 데이터 생성
-3. `playbooks/connect-navigation.md` — 화면 간 네비게이션 연결
-4. `playbooks/implement-interactions.md` — 상태 변화, Dialog, Accordion 등 인터랙션
-5. `playbooks/manage-state.md` — 화면 간 상태 유지
-6. `playbooks/report-checkpoint.md` — 체크포인트 보고 (마지막)
+1. `playbooks/select-visual-language.md` — **색·타이포·간격 토큰의 출처 결정** (건너뛸 수 있음)
+2. `playbooks/build-prototype-html.md` — **Figma 와이어프레임 → HTML 골격**
+3. `playbooks/create-mock-data.md` — 목업 데이터 생성
+4. `playbooks/connect-navigation.md` — 화면 간 네비게이션 연결
+5. `playbooks/implement-interactions.md` — 상태 변화, Dialog, Accordion 등 인터랙션
+6. `playbooks/manage-state.md` — 화면 간 상태 유지
+7. `playbooks/report-checkpoint.md` — 체크포인트 보고 (마지막)
 
 ## 실행 순서
 ```
-HTML 골격 생성 → 목업 데이터 → 네비게이션 연결 → 인터랙션 구현 → 상태 관리 → 체크포인트 보고
+시각 언어 선택 → HTML 골격 생성 → 목업 데이터 → 네비게이션 연결 → 인터랙션 구현 → 상태 관리 → 체크포인트 보고
 ```
 
 > Wireframe Agent의 산출물은 **Figma 프레임이지 HTML이 아니다.**

@@ -14,6 +14,7 @@ Prototype Agent가 인터랙션을 붙이기 전에 반드시 실행하는 첫 �
 - `specs/screens.md`에 화면 목록과 Spec이 있다.
 - `specs/layouts.md`에 화면별 레이아웃 구조도가 있다.
 - `specs/figma-info.md`에 Figma fileKey와 프레임 nodeId가 기록되어 있다.
+- `playbooks/select-visual-language.md`가 먼저 실행되어 토큰 출처가 정해져 있다 (건너뛰었으면 Tone & Mood 기준).
 
 ---
 
@@ -138,8 +139,10 @@ function render(screenId){
 `sessionStorage`에 빈 상태가 저장되어, 이후 기본 URL로 와도 계속 Empty로 남는다.
 데모·리뷰 중에 "처음 상태"와 "진행 중 상태"를 오갈 수 없게 된다.
 
-### 4. DS 토큰으로 styles.css 작성
-`context/design-system.md`의 Design Tokens를 CSS Variables로 선언하고, **하드코딩된 값을 쓰지 않는다.**
+### 4. 토큰으로 styles.css 작성
+토큰 출처는 **`context/design-tokens.md`가 우선**이다 (`select-visual-language.md` 산출물).
+그 파일이 없으면 `context/design-system.md`의 Design Tokens를 쓴다.
+어느 쪽이든 **하드코딩된 값을 쓰지 않는다.**
 
 ```css
 :root {

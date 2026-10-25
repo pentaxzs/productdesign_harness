@@ -332,7 +332,7 @@ productdesign_harness/
 ├── playbooks/                   ← Playbook (실행 절차)
 │   ├── discover-context.md      ←   Discovery (질문)
 │   ├── create-figma-onepager.md ←   Figma 1-Pager 생성
-│   └── ...                      ←   총 24개
+│   └── ...                      ←   총 26개
 ├── context/                     ← Context (배경 지식)
 │   ├── product-context.md       ←   제품 배경 (빈 템플릿 — Discovery가 채움)
 │   ├── ux-principles.md         ←   UX 원칙 (수정해서 사용)
@@ -375,11 +375,12 @@ productdesign_harness/
 
 | 파일 | 언제 수정하나 | 수정하지 않으면 |
 |------|-------------|----------------|
-| `context/design-system.md` | 자체 DS를 쓸 때 | Figma Simple Design System 기준으로 설계됩니다 |
+| `context/design-system.md` | 자체 DS를 쓸 때 | **Phase 2에서 사용 가능한 DS를 탐지해 물어봅니다.** 못 찾으면 Figma Simple Design System |
+| `context/design-tokens.md` | 브랜드 색·폰트가 정해져 있을 때 | **Phase 3에서 물어봅니다.** 건너뛰면 Tone & Mood에서 생성 |
 | `context/ux-principles.md` | 팀의 원칙이 따로 있을 때 | 범용 7원칙이 적용됩니다 |
 | `context/product-context.md` | 미리 채워두고 싶을 때 | Discovery 단계에서 AI가 질문해서 채웁니다 |
 | `evaluation/checklist.md` | Part B(공통 기준)를 바꾸고 싶을 때 | Part A(제품별)는 Planner가 자동 생성합니다 |
-| `playbooks/` | 절차를 추가·변경할 때 | 기본 24개 Playbook이 실행됩니다 |
+| `playbooks/` | 절차를 추가·변경할 때 | 기본 26개 Playbook이 실행됩니다 |
 
 **Playbook 추가**: `playbooks/`에 새 .md 파일을 만들고 Agent(`agents/*.md`)나 Skill(`.claude/commands/*.md`)의 실행 순서에 추가합니다.
 

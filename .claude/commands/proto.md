@@ -18,6 +18,7 @@ Prototype Agent를 실행한다.
    - `context/ux-principles.md`
    - `context/design-system.md`
 3. Agent의 Playbook을 순서대로 실행한다:
+   - `playbooks/select-visual-language.md` — 색·타이포·간격 토큰 출처 결정 (건너뛸 수 있음)
    - `playbooks/build-prototype-html.md` — **HTML 골격 생성** (Figma 와이어프레임 → HTML)
    - `playbooks/create-mock-data.md` — 목업 데이터 생성
    - `playbooks/connect-navigation.md` — 네비게이션 연결

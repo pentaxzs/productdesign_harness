@@ -11,6 +11,8 @@ Production 개발이 아니라, "이 경험으로 개발 논의를 시작할 수
 ## Rules (반드시 준수)
 
 ### Design System 우선
+- **컴포넌트 인벤토리는 `context/design-system.md`, 시각 토큰은 `context/design-tokens.md`.**
+  둘이 충돌하면 `design-tokens.md`가 우선한다. 각각 Phase 2·3에서 출처를 정한다.
 - 새로운 UI 컴포넌트를 만들기 전에 `context/design-system.md`에서 적합한 컴포넌트를 먼저 찾는다.
 - 기존 컴포넌트로 해결할 수 없을 때만 커스텀 UI를 만들되, 기존 토큰(색상, 간격, radius)을 사용한다.
 
@@ -98,8 +100,8 @@ Skill (트리거 명령)  →  Agent (주체)  →  Playbook (절차)
 | Agent | 파일 | 역할 | Playbooks |
 |-------|------|------|-----------|
 | Planner | `agents/planner.md` | PM — 문제 구조화 | discover-context, check-figma-access, create-figma-onepager, analyze-requirements, create-user-flow, create-screen-spec, **create-checklist**, report-checkpoint |
-| Wireframe | `agents/wireframe.md` | UX Designer — 화면 구조 설계 (Figma) | check-figma-access, map-components, design-layout, build-wireframe-figma, implement-responsive-figma, report-checkpoint |
-| Prototype | `agents/prototype.md` | Interaction Designer — 경험 연결 | **build-prototype-html**, create-mock-data, connect-navigation, implement-interactions, manage-state, report-checkpoint |
+| Wireframe | `agents/wireframe.md` | UX Designer — 화면 구조 설계 (Figma) | check-figma-access, **select-design-system**, map-components, design-layout, build-wireframe-figma, implement-responsive-figma, report-checkpoint |
+| Prototype | `agents/prototype.md` | Interaction Designer — 경험 연결 | **select-visual-language**, **build-prototype-html**, create-mock-data, connect-navigation, implement-interactions, manage-state, report-checkpoint |
 | Critic | `agents/critic.md` | Design Reviewer — 결과 검증 | **check-prototype-runs**, check-requirements, check-ux-principles, check-design-system, write-critique-report, report-checkpoint |
 
 모든 Agent는 작업을 마칠 때 `playbooks/report-checkpoint.md`로 산출물을 보고하고 멈춘다.
@@ -159,12 +161,14 @@ productdesign_harness/
 │   ├── create-user-flow.md
 │   ├── create-screen-spec.md
 │   ├── create-checklist.md          ← 검증 체크리스트 Part A 생성
+│   ├── select-design-system.md      ← 컴포넌트 인벤토리 선택 (Phase 2)
 │   ├── map-components.md
 │   ├── design-layout.md
 │   ├── build-wireframe-figma.md
 │   ├── implement-responsive-figma.md
 │   ├── build-wireframe-html.md       ← (Figma 미사용 시 폴백)
 │   ├── implement-responsive.md       ← (Figma 미사용 시 폴백)
+│   ├── select-visual-language.md     ← 색·타이포 토큰 선택 (Phase 3, 건너뛰기 가능)
 │   ├── build-prototype-html.md       ← Figma 와이어프레임 → HTML 골격
 │   ├── create-mock-data.md
 │   ├── connect-navigation.md
