@@ -51,6 +51,8 @@
 3. `specs/figma-info.md`를 보고 Phase 1에서 결정된 경로를 따른다. **여기서 다시 묻지 않는다.**
    Figma 사용이면 `figma-use` 스킬을 로드한다 (MCP resource: `skill://figma/figma-use/SKILL.md`).
 4. Playbook을 순서대로 실행한다:
+   - `playbooks/select-design-system.md` — **컴포넌트 인벤토리 결정.** 사용 가능한 DS를
+     탐지하고(Figma 라이브러리 / 코드 레포), 찾은 게 있을 때만 묻는다. 없으면 SDS로 진행
    - `playbooks/map-components.md` — Screen 요소를 DS 컴포넌트에 매핑
    - `playbooks/design-layout.md` — 정보 계층과 레이아웃 설계
    - `playbooks/build-wireframe-figma.md` — Figma에 와이어프레임 프레임 생성 (`use_figma`)
@@ -72,7 +74,9 @@ HTML 경로로 진행한다:
 1. `agents/prototype.md`를 읽는다.
 2. Context를 읽는다: `specs/user-flow.md`, `specs/screens.md`, `specs/figma-info.md`, `context/ux-principles.md`, `context/design-system.md`
 3. Playbook을 순서대로 실행한다:
-   - `playbooks/build-prototype-html.md` — **Figma 와이어프레임 → HTML 골격** (반드시 첫 번째)
+   - `playbooks/select-visual-language.md` — **색·타이포·간격 토큰의 출처 결정.**
+     기본은 Tone & Mood에서 생성(건너뛰기). DESIGN.md를 붙여넣거나 직접 지정할 수 있다
+   - `playbooks/build-prototype-html.md` — **Figma 와이어프레임 → HTML 골격**
      (`get_design_context` / `get_screenshot`으로 프레임 구조를 확인한 뒤 HTML로 옮긴다)
    - `playbooks/create-mock-data.md`
    - `playbooks/connect-navigation.md`

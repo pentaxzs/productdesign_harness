@@ -14,8 +14,10 @@ python3 - <<'PY' || fail=1
 import re, pathlib, sys
 root = pathlib.Path('.')
 existing = {str(f).removeprefix('./') for f in root.rglob('*.md') if 'examples' not in str(f)}
+# 파이프라인이 실행 중에 만드는 파일 — 템플릿에는 없는 것이 정상이다
 generated = {'specs/user-flow.md','specs/screens.md','specs/figma-info.md','specs/layouts.md',
-             'specs/product-1-pager.md','evaluation/critique-report.md'}
+             'specs/product-1-pager.md','evaluation/critique-report.md',
+             'context/design-tokens.md'}
 bad = []
 targets = (list(root.glob('.claude/commands/*.md')) + list(root.glob('agents/*.md'))
            + list(root.glob('playbooks/*.md')) + [pathlib.Path(f) for f in ('CLAUDE.md','AGENTS.md','README.md')])
