@@ -8,6 +8,7 @@
 
 ## Input
 - `check-prototype-runs` 결과 (브라우저 실행 검증)
+- `check-design-quality` 결과 (디자인 품질)
 - `check-requirements` 결과
 - `check-ux-principles` 결과
 - `check-design-system` 결과
@@ -34,6 +35,12 @@
 | UX 원칙 위반 | X건 |
 | DS 위반 | Y건 |
 | 상태 누락 | Z건 |
+
+---
+
+## 디자인 품질
+`check-design-quality.md`의 Output 형식을 그대로 옮긴다.
+(사용된 값 / 기준 이탈 / 반복 패턴 / 대비)
 
 ---
 

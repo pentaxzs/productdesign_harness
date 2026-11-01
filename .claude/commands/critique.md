@@ -15,6 +15,7 @@ Critic Agent를 실행한다.
    - `prototype/` 디렉토리의 HTML/CSS/JS 파일들
 3. Agent의 Playbook을 순서대로 실행한다:
    - `playbooks/check-prototype-runs.md` — **브라우저 실행 검증** (가장 먼저)
+   - `playbooks/check-design-quality.md` — 디자인 품질 점검 (간격·색·타이포 일관성)
    - `playbooks/check-requirements.md` — 요구사항 충족 점검
    - `playbooks/check-ux-principles.md` — UX 원칙 위반 점검
    - `playbooks/check-design-system.md` — DS 준수 점검

@@ -70,6 +70,20 @@ HTML 경로로 진행한다:
 
 이 경우 Phase 3의 `build-prototype-html.md`는 **생략한다** (HTML이 이미 존재하므로).
 
+### Phase 2.5: Visual Direction (선택 단계)
+
+와이어프레임까지로 충분하면 건너뛴다. 시각 방향을 먼저 합의하고 싶을 때만 실행한다.
+
+1. `playbooks/select-visual-language.md` — 토큰이 아직 없으면 여기서 정한다
+2. `playbooks/build-hifi-screen.md` — **핵심 화면 1~2개만** 하이파이로 올린다.
+   전체 화면에 하지 않는다. 방향 합의가 목적이므로 1개면 충분하다
+3. Auto Layout 함정 3종 검사 + 스크린샷 확인
+4. Output: Figma 내 `[Hi-Fi *]` 프레임, Variables 컬렉션, `specs/figma-info.md` 갱신
+5. **체크포인트**: 시각 방향을 확인받는다. 합의 없이 넘어가면 이 단계가 무의미하다
+   선택지 — 이 방향으로 진행 / 시각 방향 수정 / 다른 화면도 / 와이어프레임으로 충분
+
+> 하이파이를 만들었으면 Phase 3의 프로토타입은 **그 시안에 맞춰** 만든다.
+
 ### Phase 3: Prototype (Prototype Agent)
 1. `agents/prototype.md`를 읽는다.
 2. Context를 읽는다: `specs/user-flow.md`, `specs/screens.md`, `specs/figma-info.md`, `context/ux-principles.md`, `context/design-system.md`
@@ -93,13 +107,15 @@ HTML 경로로 진행한다:
 2. 모든 Context + Specs + Prototype 파일을 읽는다.
 3. Playbook을 순서대로 실행한다:
    - `playbooks/check-prototype-runs.md` — **브라우저 실행 검증** (반드시 첫 번째)
+   - `playbooks/check-design-quality.md` — **디자인 품질 점검.** 렌더된 페이지에서 실제 사용된
+     색·간격·타이포를 수집해 기준과 대조한다. 수치로 안 잡히는 것은 스크린샷으로
    - `playbooks/check-requirements.md`
    - `playbooks/check-ux-principles.md`
    - `playbooks/check-design-system.md`
    - `playbooks/write-critique-report.md`
 4. Output: `evaluation/critique-report.md`
 5. **체크포인트**: `playbooks/report-checkpoint.md` — **판정(Pass/Revise)**, 실행 검증 수행 여부,
-   콘솔 에러 수, Critical/Major/Minor 건수.
+   콘솔 에러 수, Critical/Major/Minor 건수, **디자인 품질 이탈 건수**.
    판정이 Revise면 선택지를 "수정 진행 / 확인만 하고 멈춤 / 특정 이슈 무시하고 Pass"로 바꾼다.
 
 > 코드를 읽기 전에 **먼저 띄워본다.** 백지 화면, 레이아웃 깨짐, 반응 없는 버튼은

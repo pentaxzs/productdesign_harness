@@ -11,6 +11,7 @@
 - Design System을 무시하고 커스텀 UI를 만든 곳이 있는가?
 - 사용자가 길을 잃을 수 있는 곳이 있는가?
 - 상태 처리가 누락된 곳이 있는가?
+- 간격·색·타이포가 일관된가? 근거 없는 장식이 있는가?
 
 ## 알아야 할 Context
 1. `context/product-context.md` — Key Scenarios (요구사항 충족 기준)
@@ -22,15 +23,16 @@
 
 ## 사용하는 Playbooks
 1. `playbooks/check-prototype-runs.md` — **브라우저 실행 검증** (반드시 첫 번째)
-2. `playbooks/check-requirements.md` — 요구사항 충족 여부 점검
-3. `playbooks/check-ux-principles.md` — UX 원칙 위반 점검
-4. `playbooks/check-design-system.md` — DS 준수 여부 점검
-5. `playbooks/write-critique-report.md` — 구조화된 피드백 리포트 작성
-6. `playbooks/report-checkpoint.md` — 체크포인트 보고 (마지막, 판정 포함)
+2. `playbooks/check-design-quality.md` — **디자인 품질 점검** (간격·색·타이포 일관성, 반복 패턴)
+3. `playbooks/check-requirements.md` — 요구사항 충족 여부 점검
+4. `playbooks/check-ux-principles.md` — UX 원칙 위반 점검
+5. `playbooks/check-design-system.md` — DS 준수 여부 점검
+6. `playbooks/write-critique-report.md` — 구조화된 피드백 리포트 작성
+7. `playbooks/report-checkpoint.md` — 체크포인트 보고 (마지막, 판정 포함)
 
 ## 실행 순서
 ```
-실행 검증 → 요구사항 점검 → UX 원칙 점검 → DS 준수 점검 → 리포트 작성 → 판정 → 체크포인트 보고
+실행 검증 → 디자인 품질 점검 → 요구사항 점검 → UX 원칙 점검 → DS 준수 점검 → 리포트 작성 → 판정 → 체크포인트 보고
 ```
 
 > **코드를 읽기 전에 먼저 띄워본다.**

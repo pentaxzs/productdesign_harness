@@ -227,7 +227,8 @@ claude                 # MakersBook 에서 시작 → 여기 기준으로 목록
 | `/plan-wire` | 질문으로 맥락 확보 → User Flow + Screen Spec + 검증 체크리스트 | 없음 | `context/product-context.md`, `specs/user-flow.md`, `specs/screens.md`, `evaluation/checklist.md` |
 | `/wireframe` | Screen Spec → 화면별 와이어프레임 (Mobile + Desktop) | `specs/screens.md` | Figma 프레임 또는 `prototype/` HTML, `specs/layouts.md` |
 | `/proto` | 와이어프레임 → 동작하는 Interactive Prototype | `specs/screens.md` + 와이어프레임 | `prototype/index.html`, `styles.css`, `app.js` |
-| `/critique` | 브라우저로 띄워 검증 → 피드백 리포트 | `prototype/index.html` | `evaluation/critique-report.md` |
+| `/hifi` | 핵심 화면 1~2개를 하이파이 디자인으로 **(선택)** | Phase 2 와이어프레임 | Figma `[Hi-Fi *]` 프레임 |
+| `/critique` | 브라우저로 띄워 검증 + 디자인 품질 점검 → 리포트 | `prototype/index.html` | `evaluation/critique-report.md` |
 
 선행 조건이 없으면 무엇을 먼저 실행해야 하는지 안내합니다.
 모든 명령에 `--auto` 를 붙일 수 있습니다 ([진행 방식](#진행-방식--단계마다-멈춥니다)).
@@ -276,13 +277,31 @@ claude                 # MakersBook 에서 시작 → 여기 기준으로 목록
 Critic이 Revise 판정을 내렸을 때의 수정(Refine)은 **어느 경우에도 멈추지 않습니다.**
 고칠 것이 이미 명확하기 때문입니다. 최종 판정이 날 때 한 번만 보고합니다.
 
+## 하이파이는 선택입니다
+
+`/wire` 는 **와이어프레임까지** 만듭니다. 더 나아가고 싶으면 `/hifi` 로 **핵심 화면 1~2개만** 실제 디자인 수준으로 올립니다.
+
+```bash
+/hifi              # specs/screens.md 의 ★ 화면
+/hifi 문장 학습     # 특정 화면 지정
+```
+
+**전체 화면을 하이파이로 만들지 않습니다.** 의도적인 제약입니다.
+
+- 방향 합의에는 **1개면 충분**합니다. 14개를 봐야 "이 톤이 맞나"를 아는 게 아닙니다
+- 하이파이는 AI 품질이 가장 많이 떨어지는 구간입니다. 양이 늘수록 평균이 내려갑니다
+- 전체가 색을 입으면 **완성돼 보이는데 완성되지 않은 것**이 됩니다. 회색 와이어프레임이 오히려 정직합니다
+
+합의된 뒤 나머지는 사람이 확장하거나, 다음 반복에서 늘립니다.
+
 ## 파이프라인
 
 ```
 Phase 1: Plan        — 질문으로 맥락 확보 → 1-Pager → 요구사항 → User Flow → Screen Spec → 검증 체크리스트
 Phase 2: Wireframe   — Figma에 Mobile(375px) + Desktop(1440px) 와이어프레임 생성
+Phase 2.5: Visual Direction — 핵심 화면 1~2개 하이파이 (선택)
 Phase 3: Prototype   — Figma → HTML 골격 변환 → 데이터·네비게이션·인터랙션·상태
-Phase 4: Critique    — 브라우저 실행 검증 → 요구사항·UX원칙·디자인시스템 검증
+Phase 4: Critique    — 브라우저 실행 검증 → 디자인 품질 → 요구사항·UX원칙·디자인시스템
 Phase 5: Refine      — Critique에서 Revise 판정 시 수정 (최대 3회)
 Phase 6: Human Review — 최종 확인
 ```
@@ -332,7 +351,7 @@ productdesign_harness/
 ├── playbooks/                   ← Playbook (실행 절차)
 │   ├── discover-context.md      ←   Discovery (질문)
 │   ├── create-figma-onepager.md ←   Figma 1-Pager 생성
-│   └── ...                      ←   총 26개
+│   └── ...                      ←   총 28개
 ├── context/                     ← Context (배경 지식)
 │   ├── product-context.md       ←   제품 배경 (빈 템플릿 — Discovery가 채움)
 │   ├── ux-principles.md         ←   UX 원칙 (수정해서 사용)
@@ -380,7 +399,7 @@ productdesign_harness/
 | `context/ux-principles.md` | 팀의 원칙이 따로 있을 때 | 범용 7원칙이 적용됩니다 |
 | `context/product-context.md` | 미리 채워두고 싶을 때 | Discovery 단계에서 AI가 질문해서 채웁니다 |
 | `evaluation/checklist.md` | Part B(공통 기준)를 바꾸고 싶을 때 | Part A(제품별)는 Planner가 자동 생성합니다 |
-| `playbooks/` | 절차를 추가·변경할 때 | 기본 26개 Playbook이 실행됩니다 |
+| `playbooks/` | 절차를 추가·변경할 때 | 기본 28개 Playbook이 실행됩니다 |
 
 **Playbook 추가**: `playbooks/`에 새 .md 파일을 만들고 Agent(`agents/*.md`)나 Skill(`.claude/commands/*.md`)의 실행 순서에 추가합니다.
 
