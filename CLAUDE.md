@@ -91,6 +91,7 @@ Skill (트리거 명령)  →  Agent (주체)  →  Playbook (절차)
 | `/wireframe` | Wireframe | Screen Spec → HTML 와이어프레임 |
 | `/proto` | Prototype | 와이어프레임 → Interactive Prototype |
 | `/critique` | Critic | Prototype 검증 → Feedback Report |
+| `/hifi` | Wireframe | 핵심 화면 1~2개를 하이파이로 (선택) |
 | `/wire` | 전체 파이프라인 | Plan → Wireframe → Prototype → Critique → Refine |
 
 ---
@@ -100,9 +101,9 @@ Skill (트리거 명령)  →  Agent (주체)  →  Playbook (절차)
 | Agent | 파일 | 역할 | Playbooks |
 |-------|------|------|-----------|
 | Planner | `agents/planner.md` | PM — 문제 구조화 | discover-context, check-figma-access, create-figma-onepager, analyze-requirements, create-user-flow, create-screen-spec, **create-checklist**, report-checkpoint |
-| Wireframe | `agents/wireframe.md` | UX Designer — 화면 구조 설계 (Figma) | check-figma-access, **select-design-system**, map-components, design-layout, build-wireframe-figma, implement-responsive-figma, report-checkpoint |
+| Wireframe | `agents/wireframe.md` | UX Designer — 화면 구조 설계 (Figma) | check-figma-access, **select-design-system**, map-components, design-layout, build-wireframe-figma, implement-responsive-figma, **build-hifi-screen**, report-checkpoint |
 | Prototype | `agents/prototype.md` | Interaction Designer — 경험 연결 | **select-visual-language**, **build-prototype-html**, create-mock-data, connect-navigation, implement-interactions, manage-state, report-checkpoint |
-| Critic | `agents/critic.md` | Design Reviewer — 결과 검증 | **check-prototype-runs**, check-requirements, check-ux-principles, check-design-system, write-critique-report, report-checkpoint |
+| Critic | `agents/critic.md` | Design Reviewer — 결과 검증 | **check-prototype-runs**, **check-design-quality**, check-requirements, check-ux-principles, check-design-system, write-critique-report, report-checkpoint |
 
 모든 Agent는 작업을 마칠 때 `playbooks/report-checkpoint.md`로 산출물을 보고하고 멈춘다.
 
@@ -118,10 +119,12 @@ Phase 1: Plan     (Planner Agent)     → context/ + specs/ + Figma 1-Pager + ch
   ↓ 사용자 확인 (체크포인트)
 Phase 2: Wireframe (Wireframe Agent)  → Figma 와이어프레임 (Mobile + Desktop)
   ↓ Figma 사용 불가 시 HTML 경로로 폴백 (파이프라인 중단하지 않음)
+Phase 2.5: Visual Direction (선택)    → 핵심 화면 1~2개 하이파이
+  ↓ 시각 방향 합의가 목적. 전체 화면에 하지 않는다
 Phase 3: Prototype (Prototype Agent)  → prototype/ Interactive
   ↓ Figma 프레임을 HTML 골격으로 변환한 뒤 인터랙션을 붙인다
 Phase 4: Critique  (Critic Agent)     → evaluation/
-  ↓ 브라우저 실행 검증 → 코드 검토 순서
+  ↓ 브라우저 실행 검증 → 디자인 품질 점검 → 코드 검토 순서
   ↓ 사용자에게 결과 보여줌 (체크포인트)
 Phase 5: Refine    (조건부, 최대 3회) → prototype/ 수정
 Phase 6: Human Review                → 최종 안내
@@ -166,6 +169,7 @@ productdesign_harness/
 │   ├── design-layout.md
 │   ├── build-wireframe-figma.md
 │   ├── implement-responsive-figma.md
+│   ├── build-hifi-screen.md          ← 핵심 화면 하이파이 (Phase 2.5, 선택)
 │   ├── build-wireframe-html.md       ← (Figma 미사용 시 폴백)
 │   ├── implement-responsive.md       ← (Figma 미사용 시 폴백)
 │   ├── select-visual-language.md     ← 색·타이포 토큰 선택 (Phase 3, 건너뛰기 가능)
@@ -175,6 +179,7 @@ productdesign_harness/
 │   ├── implement-interactions.md
 │   ├── manage-state.md
 │   ├── check-prototype-runs.md       ← 브라우저 실행 검증
+│   ├── check-design-quality.md       ← 디자인 품질 점검
 │   ├── report-checkpoint.md          ← Phase별 체크포인트 보고
 │   ├── check-requirements.md
 │   ├── check-ux-principles.md

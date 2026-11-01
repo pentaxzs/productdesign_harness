@@ -31,7 +31,8 @@ Screen Spec을 받아 실제 화면의 정보 계층, CTA 배치, 컴포넌트 �
 4. `playbooks/design-layout.md` — 정보 계층과 레이아웃 설계
 5. `playbooks/build-wireframe-figma.md` — Figma에 와이어프레임 프레임 생성
 6. `playbooks/implement-responsive-figma.md` — Mobile + Desktop 프레임 쌍으로 반응형 표현
-7. `playbooks/report-checkpoint.md` — 체크포인트 보고 (마지막)
+7. `playbooks/build-hifi-screen.md` — **핵심 화면 1~2개 하이파이** (선택 단계)
+8. `playbooks/report-checkpoint.md` — 체크포인트 보고 (마지막)
 
 ## Figma MCP 사용 규칙
 - `use_figma` 호출 전 반드시 `figma-use` 스킬을 로드한다.
