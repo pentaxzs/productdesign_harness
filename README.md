@@ -291,6 +291,15 @@ Phase 6: Human Review — 최종 확인
 
 **Figma MCP가 없어도 동작합니다.** Phase 1의 1-Pager는 마크다운으로, Phase 2의 와이어프레임은 HTML 경로로 자동 전환되며, 파이프라인은 중단되지 않습니다. Codex 환경이 이 경로를 사용합니다.
 
+### 한 걸음 더 — Specs → 디자인
+
+Figma의 **Specs** 기능으로 1-Pager를 구조화된 문서로 작성한 뒤, Agent에게 해당 Specs를 참조시키면 와이어프레임이 아니라 **디자인 수준의 화면 초안**을 뽑을 수 있습니다. 이 하네스의 파이프라인을 디자인 단계까지 확장하는 방법입니다.
+
+```
+/wire 파이프라인           Specs 확장
+Plan → Wireframe → Proto   →   Figma Specs → Agent 디자인 초안
+```
+
 ### 프로토타입 실행
 
 ```bash
@@ -416,11 +425,18 @@ git add . && git commit
 | `prototype/index.html`, `app.js`, `styles.css` | Phase 3 (Prototype) |
 | `evaluation/critique-report.md` | Phase 4 (Critique) |
 
-실제 서비스가 아닌 가상 데이터입니다. 하네스 본체에는 제품 고유 내용이 포함되어 있지 않습니다.
+**동작하는 프로토타입도 확인할 수 있습니다:**
+
+| 버전 | URL | 설명 |
+|------|-----|------|
+| 와이어프레임 | [proto-cardfit.vercel.app](https://proto-cardfit.vercel.app/) | `/wire` 파이프라인 산출물 |
+| 디자인 | [protodesign-cardfit.vercel.app](https://protodesign-cardfit.vercel.app/) | Figma Specs → Agent 디자인 산출물 |
+
+이 예시는 **하네스를 돌리면 무엇이 나오는지** 감을 잡기 위한 참고용입니다. 실제 서비스가 아닌 가상 데이터이며, 하네스 본체에는 제품 고유 내용이 포함되어 있지 않습니다. 본인 제품으로 `/wire`를 실행해야 의미 있는 결과가 나옵니다.
 
 ## 관련 글
 
-이 하네스의 설계 과정과 배경은 MakersNote 38호에서 자세히 다루고 있습니다.
+이 하네스의 설계 과정과 배경은 **MakersNote 38호 「AI에게 와이어프레임을 그려달라고 하지 마세요」**에서 자세히 다루고 있습니다.
 👉 https://maily.so/makersnote/
 
 ## License
